@@ -1,10 +1,2 @@
-﻿  Puzzle.cpp
-  Gerando Código...
-  Compilando...
-  Cwords.cpp
-c:\users\mrhit\documents\github\projprog\cwords.cpp(20): warning C4018: '<': incompatibilidade de signed/unsigned
-c:\users\mrhit\documents\github\projprog\cwords.cpp(24): warning C4018: '<': incompatibilidade de signed/unsigned
-c:\users\mrhit\documents\github\projprog\cwords.cpp(32): warning C4267: '=': conversão de 'size_t' para 'char', possível perda de dados
-c:\users\mrhit\documents\github\projprog\cwords.cpp(42): warning C4018: '<': incompatibilidade de signed/unsigned
-  Gerando Código...
+﻿  Main.cpp
   Project9.vcxproj -> C:\Users\MrHit\Documents\GitHub\ProjProg\Debug\Project9.exe

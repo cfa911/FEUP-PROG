@@ -15,40 +15,43 @@ Cwords::Cwords(int x, int y)
 vector<string> Cwords::emptycword(int x, int y)
 {
 	vector<string> crossword;
+	crossword.resize(y + 1);
 	string a;
-	char c, C;
+	int b = x * 2, d = 0;
+	char c = 'a', C = 'A';
 	for (size_t i = 0; i < y + 1; i++)
 	{
-		if (y == 0)
+		if (i == 0)
 		{
-			for (size_t j = 0; j < x * 2; j++)
+			for (size_t j = 0; j < b; j++)
 			{
-				if ((y *2) % 2 == 0)
+				if (j % 2 == 0)
 				{
 					a = a + " ";
 				}
 				else
 				{
-					c = 'a' + j - 1;
+					c = c + d;
 					a = a + c;
+					d = 1;
 				}
-
+				
 			}
 			crossword[i] = a;
 			a.clear();
 		}
 		else
 		{
+			d = 0;
 			for (size_t j = 0; j < x * 2; j++)
 			{
 				if (j == 0)
 				{
-					C = 'A' + y - 1;
 					a = a + C;
 				}
 				else
 				{
-					if ((x*2) % 2 == 0)
+					if (j % 2 == 0)
 					{
 						a = a + " ";
 					}
@@ -57,9 +60,11 @@ vector<string> Cwords::emptycword(int x, int y)
 						a = a + ".";
 					}
 				}
+				d = 1;
 			}
 			crossword[i] = a;
 			a.clear();
+			C++;
 		}
 	}
 	return crossword;
@@ -71,3 +76,26 @@ void Cwords::printcword() {
 		cout << this->cword[i] << endl;
 	}
 }
+
+bool Cwords::wordexists(string word) {
+	for (size_t i = 0; i < this->presw.size(); i++)
+	{
+		if (word == this->presw.at(i))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Cwords::wordfits(string word, int x, int y) {
+	if (word.size() > (this->cword.at(0).size() / 2) && word.size() > (this->cword.size()))
+	{
+		return false;
+	}
+	else
+	{
+
+	}
+}
+	
