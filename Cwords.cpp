@@ -7,12 +7,17 @@
 
 using namespace std;
 
+Cwords::Cwords(int x, int y)
+{
+	this->cword = emptycword(x, y);
+}
+
 vector<string> Cwords::emptycword(int x, int y)
 {
 	vector<string> crossword;
 	string a;
 	char c, C;
-	for (size_t i = 0; i < y; i++)
+	for (size_t i = 0; i < y + 1; i++)
 	{
 		if (y == 0)
 		{
@@ -60,11 +65,9 @@ vector<string> Cwords::emptycword(int x, int y)
 	return crossword;
 }
 
-int main() {
-
-
-
-
-
-
+void Cwords::printcword() {
+	for (size_t i = 0; i < this->cword.size(); i++)
+	{
+		cout << this->cword[i] << endl;
+	}
 }

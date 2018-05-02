@@ -8,8 +8,10 @@ using namespace std;
 class Cwords
 {
 public:
-	 vector<string> emptycword(int x, int y);
-	~Cwords();
+	Cwords(int x,int y);
+	vector<string> emptycword(int x, int y);
+	void printcword();
+	//Cwords();
 
 private:
 	vector<string> cword;
