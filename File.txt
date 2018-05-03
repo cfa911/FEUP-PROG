@@ -2539,7 +2539,7 @@ Illustrious: renowned, glorious, brilliant, deathless, eminent, distinguished, c
 Ill: antipathy, hatred, malevolence, dislike, aversion
 Image: statue, likeness, representation, effigy, copy, metaphor, idea, conception, fiction, shadow, picture, vision
 Imagery: poetry, fancy, illustration, metaphor, similitude, ant: \r\, prose, statement, fact
-Imaginative: creative, conceptive, ideal, poetical, romantic, inventive, original
+Imaginative: creative, conceptive, ideal, poetical, romantic, inventive, original Ill
 Imagine: conceive, suppose, surmise, understand, fancy, fabricate, deem, presume, think, apprehend
 Imbecile: foolish, idiotic, fatuous
 Imbecility: feebleness, senility, weakness, dotage

@@ -18,9 +18,17 @@ void insertwords(string line, map<string, string> &words) {
 	{
 		a[i] = toupper(a[i]);
 	}
-	line.erase(0, npos + 1);
-	words.insert(std::pair<string, string>(a, line));
-	line.clear();
+	if (words.find(a) == words.end())
+	{
+		line.erase(0, npos + 1);
+		words.insert(std::pair<string, string>(a, line));
+		line.clear();
+	}
+	else
+	{
+		line.erase(0, npos + 1);
+		words.find(a)->second = words.find(a)->second + "," + line;
+	}
 }
 
 int main() {
@@ -43,9 +51,5 @@ int main() {
 			insertwords(line, words);
 		}
 	}
-
-
-
-
 	return 0;
 }

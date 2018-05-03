@@ -78,24 +78,104 @@ void Cwords::printcword() {
 }
 
 bool Cwords::wordexists(string word) {
-	for (size_t i = 0; i < this->presw.size(); i++)
-	{
-		if (word == this->presw.at(i))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Cwords::wordfits(string word, int x, int y) {
-	if (word.size() > (this->cword.at(0).size() / 2) && word.size() > (this->cword.size()))
+	if (this->palex.find(word) == this->palex.end())
 	{
 		return false;
 	}
 	else
 	{
+		return true;
+	}
+}
 
+bool Cwords::wordfits(string word, int x, int y, char orientation) {
+	char a = toupper(orientation);
+	size_t line_s = this->cword.at(0).size(), colun_s = this->cword.size();
+	switch (a)
+	{
+	case 'V':
+	{
+		if (word.size() > colun_s / 2)
+		{
+			return false;
+		}
+		else
+		{
+			if (colun_s - y >= word.size())
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		break;
+	}
+	case 'H':
+	{
+		size_t trues = line_s / 2;
+		if (trues < word.size())
+		{
+			return false;
+		}
+		else
+		{
+			if (trues - (x -1) >= word.size())
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		break;
+	}
+	default:
+		cout << "Invalid orientation" << endl;
+		return false;
+		break;
+	}
+}
+bool Cwords::spaceocuppied(string word, int x, int y, char orientation) {
+	size_t line_s = this->cword.at(0).size() / 2;
+	size_t posx = (line_s - (x - 1)) * 2 + 1, posy = y + 1;
+	switch (toupper(orientation))
+	{
+	case 'H': {
+
+
+
+		break;
+	}
+	case 'V': {
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+void Cwords::insertword(string xyo, string word) {
+	if (wordexists(word) == true)
+	{
+		cout << "The word already exists" << endl;
+		return;
+	}
+	else
+	{
+		char a = xyo[0], A = xyo[1], o = xyo[2];
+		int b = a -'a', B = a - 'A';
+		if (wordfits(word,b,B,o) == false)
+		{
+			cout << "The word doesn't fit in the crossword" << endl;
+			return;
+		}
+		else
+		{
+
+		}
 	}
 }
 	
