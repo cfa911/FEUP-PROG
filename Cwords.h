@@ -18,6 +18,8 @@ public:
 	bool wordfits(string word, int x, int y, char orientation);
 	bool spaceocuppied(string word, int x, int y, char orientation);
 	void insertword(string xyo, string word);
+	bool hasadjeccentw(string word, int x, int y, char orientation);
+	void removeword(string word);
 	
 	//Cwords();
 

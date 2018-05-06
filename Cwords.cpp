@@ -17,7 +17,7 @@ vector<string> Cwords::emptycword(int x, int y)
 	vector<string> crossword;
 	crossword.resize(y + 1);
 	string a;
-	int b = x * 2, d = 0;
+	int b = x * 2 + 1, d = 0;
 	char c = 'a', C = 'A';
 	for (size_t i = 0; i < y + 1; i++)
 	{
@@ -25,7 +25,11 @@ vector<string> Cwords::emptycword(int x, int y)
 		{
 			for (size_t j = 0; j < b; j++)
 			{
-				if (j % 2 == 0)
+				if (j == 0)
+				{
+					a = a + " ";
+				}
+				else if (j % 2 != 0)
 				{
 					a = a + " ";
 				}
@@ -43,7 +47,7 @@ vector<string> Cwords::emptycword(int x, int y)
 		else
 		{
 			d = 0;
-			for (size_t j = 0; j < x * 2; j++)
+			for (size_t j = 0; j < b; j++)
 			{
 				if (j == 0)
 				{
@@ -51,7 +55,7 @@ vector<string> Cwords::emptycword(int x, int y)
 				}
 				else
 				{
-					if (j % 2 == 0)
+					if (j % 2 != 0)
 					{
 						a = a + " ";
 					}
@@ -95,13 +99,13 @@ bool Cwords::wordfits(string word, int x, int y, char orientation) {
 	{
 	case 'V':
 	{
-		if (word.size() > colun_s / 2)
+		if (word.size() > colun_s - 1)
 		{
 			return false;
 		}
 		else
 		{
-			if (colun_s - y >= word.size())
+			if (colun_s - (y + 1) >= word.size())
 			{
 				return true;
 			}
@@ -114,7 +118,7 @@ bool Cwords::wordfits(string word, int x, int y, char orientation) {
 	}
 	case 'H':
 	{
-		size_t trues = line_s / 2;
+		size_t trues = (line_s - 1) / 2;
 		if (trues < word.size())
 		{
 			return false;
@@ -139,20 +143,69 @@ bool Cwords::wordfits(string word, int x, int y, char orientation) {
 	}
 }
 bool Cwords::spaceocuppied(string word, int x, int y, char orientation) {
-	size_t line_s = this->cword.at(0).size() / 2;
-	size_t posx = (line_s - (x - 1)) * 2 + 1, posy = y + 1;
+	size_t posx = x*2 + 2, posy = y + 1;
 	switch (toupper(orientation))
 	{
 	case 'H': {
-
-
-
+		for (size_t i = 0; i < word.size(); i++)
+		{
+			if (cword.at(posy).at(posx + i*2) == '.')
+			{
+				continue;
+			}
+			else
+			{
+				if (cword.at(posy).at(posx + i * 2) == '#')
+				{
+					return true;
+				}
+				else if (cword.at(posy).at(posx + i * 2) >= 'A' && cword.at(posy).at(posx + i * 2) >= 'Z')
+				{
+					if (cword.at(posy).at(posx + i * 2) == word.at(i))
+					{
+						continue;
+					}
+					else
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 		break;
 	}
 	case 'V': {
+		for (size_t i = 0; i < word.size(); i++)
+		{
+			if (cword.at(posy + i).at(posx) == '.')
+			{
+				continue;
+			}
+			else
+			{
+				if (cword.at(posy + 1).at(posx) == '#')
+				{
+					return true;
+				}
+				else if (cword.at(posy +  i).at(posx) >= 'A' && cword.at(posy + i).at(posx) >= 'Z')
+				{
+					if (cword.at(posy + i).at(posx) == word.at(i))
+					{
+						continue;
+					}
+					else
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 		break;
 	}
 	default:
+		return true;
 		break;
 	}
 }
@@ -165,17 +218,177 @@ void Cwords::insertword(string xyo, string word) {
 	}
 	else
 	{
-		char a = xyo[0], A = xyo[1], o = xyo[2];
-		int b = a -'a', B = a - 'A';
-		if (wordfits(word,b,B,o) == false)
+		char a = xyo[0], A = xyo[1], o = toupper(xyo[2]);
+		int b = a - 'a', B = A - 'A';
+		if (wordfits(word, b, B, o) == false)
 		{
 			cout << "The word doesn't fit in the crossword" << endl;
 			return;
 		}
 		else
 		{
+			if (spaceocuppied(word, b, B, o) == true)
+			{
+				cout << "The could not be placed in those coordinates" << endl;
+				return;
+			}
+			else
+			{
+				size_t posx = b * 2 + 2, posy = B + 1;
+				size_t linex = (cword.at(0).size() - 1) / 2;
+				switch (o)
+				{
+				case 'V': {
+					if (word.size() == cword.size() - 1)
+					{
+						for (size_t i = 0; i < word.size(); i++)
+						{
+							cword.at(posy + i).at(posx) = word.at(i);
+							palex.insert(std::pair<string, string>(word,xyo));
+						}
+					}
+					else if (B == 0)
+					{
+						if (cword.at(posy + word.size()).at(posx) != '.' && cword.at(posy + word.size()).at(posx) != '#')
+						{
+							cout << "Could not place the word" << endl;
+							return;
+						}
+						else
+						{
+							cword.at(posy + word.size()).at(posx) = '#';
+							for (size_t i = 0; i < word.size(); i++)
+							{
+								cword.at(posy + i).at(posx) = word.at(i);
+							}
+							palex.insert(std::pair<string, string>(word, xyo));
+						}
 
+					}
+					else if (cword.size() - posy == word.size())
+					{
+						if (cword.at(posy - 1).at(posx) != '.' && cword.at(posy - 1).at(posx) != '#')
+						{
+							cout << "Could not place the word" << endl;
+							return;
+						}
+						else
+						{
+							cword.at(posy - 1).at(posx) = '#';
+							for (size_t i = 0; i < word.size(); i++)
+							{
+								cword.at(posy + i).at(posx) = word.at(i);
+							}
+							palex.insert(std::pair<string, string>(word, xyo));
+						}
+					}
+					else
+					{
+						if ((cword.at(posy - 1).at(posx) != '.' && cword.at(posy - 1).at(posx) != '#') || (cword.at(posy + word.size()).at(posx) != '.' && cword.at(posy + word.size()).at(posx) != '#'))
+						{
+							cout << "Could not place the word" << endl;
+							return;
+						}
+						else
+						{
+							cword.at(posy - 1).at(posx) = '#';
+							cword.at(posy + word.size()).at(posx) = '#';
+							for (size_t i = 0; i < word.size(); i++)
+							{
+								cword.at(posy + i).at(posx) = word.at(i);
+							}
+							palex.insert(std::pair<string, string>(word, xyo));
+						}
+					}
+					break;
+				}
+				case 'H': {
+					if (linex == word.size())
+					{
+						for (size_t i = 0; i < word.size(); i++)
+						{
+							cword.at(posy).at(posx + i * 2) = word.at(i);
+						}
+						palex.insert(std::pair<string, string>(word, xyo));
+					}
+					else if (b == 0)
+					{
+						if ((cword.at(posy).at(posx + word.size() * 2) != '.') && (cword.at(posy).at(posx + word.size() * 2) != '#'))
+						{
+							cout << "Could not place the word" << endl;
+							return;
+						}
+						else
+						{
+							cword.at(posy).at(posx + word.size() * 2) = '#';
+							for (size_t i = 0; i < word.size(); i++)
+							{
+								cword.at(posy).at(posx + i * 2) = word.at(i);
+							}
+							palex.insert(std::pair<string, string>(word, xyo));
+						}
+					}
+					else if (linex - b == word.size())
+					{
+						if ((cword.at(posy).at(posx - 1 * 2) != '.') && (cword.at(posy).at(posx - 1 * 2) != '#'))
+						{
+							cout << "Could not place the word" << endl;
+							return;
+						}
+						else
+						{
+							cword.at(posy).at(posx - 1 * 2) = '#';
+							for (size_t i = 0; i < word.size(); i++)
+							{
+								cword.at(posy).at(posx + i * 2) = word.at(i);
+							}
+							palex.insert(std::pair<string, string>(word, xyo));
+						}
+					}
+					else
+					{
+						if (((cword.at(posy).at(posx - 1 * 2) != '.') && (cword.at(posy).at(posx - 1 * 2) != '#')) || ((cword.at(posy).at(posx + word.size() * 2) != '.') && (cword.at(posy).at(posx + word.size() * 2) != '#')))
+						{
+							cout << "Could not place the word" << endl;
+							return;
+						}
+						else
+						{
+							cword.at(posy).at(posx + word.size() * 2) = '#';
+							cword.at(posy).at(posx - 1 * 2) = '#';
+							for (size_t i = 0; i < word.size(); i++)
+							{
+								cword.at(posy).at(posx + i * 2) = word.at(i);
+							}
+							palex.insert(std::pair<string, string>(word, xyo));
+						}
+					}
+				}
+				default:
+					break;
+				}
+			}
 		}
+	}
+}
+
+bool Cwords::hasadjeccentw(string word, int x, int y, char orientation) {
+
+}
+
+void Cwords::removeword(string word) {
+	if (wordexists(word) == false)
+	{
+		cout << "The word doesn't exist in the crossword" << endl;
+		return;
+	}
+	else
+	{
+		string xyo = palex.find(word)->second;
+		char a = xyo[0], A = xyo[1], o = xyo[2];
+		int b = a - 'a', B = A - 'A';
+		size_t posx = b * 2 + 2, posy = B + 1;
+		size_t linex = (cword.at(0).size() - 1) / 2;
 	}
 }
 	
