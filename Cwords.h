@@ -18,10 +18,13 @@ public:
 	bool wordfits(string word, int x, int y, char orientation);
 	bool spaceocuppied(string word, int x, int y, char orientation);
 	void insertword(string xyo, string word);
-	bool hasadjeccentw(string word, int x, int y, char orientation);
+	bool adjup(int x, int y);
+	bool adjdown(int x, int y);
+	bool adjleft(int x, int y);
+	bool adjright(int x, int y);
+	void fillempty();
 	void removeword(string word);
-	
-	//Cwords();
+	~Cwords();
 
 private:
 	vector<string> cword;

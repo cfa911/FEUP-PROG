@@ -184,7 +184,7 @@ bool Cwords::spaceocuppied(string word, int x, int y, char orientation) {
 			}
 			else
 			{
-				if (cword.at(posy + 1).at(posx) == '#')
+				if (cword.at(posy + i).at(posx) == '#')
 				{
 					return true;
 				}
@@ -371,11 +371,132 @@ void Cwords::insertword(string xyo, string word) {
 		}
 	}
 }
-
-bool Cwords::hasadjeccentw(string word, int x, int y, char orientation) {
-
+void invertstring(string &word) {
+	size_t i = 0;
+	char temp;
+	while (i <= word.size() - 1 - i)
+	{
+		temp = word.at(word.size() - 1 - i);
+		word.at(word.size() - 1 - i) = word.at(i);
+		word.at(i) = temp;
+		i++;
+	}
+	return;
 }
 
+bool  Cwords::adjup(int x, int y) {
+	string a;
+	if (y - 1 == 0)
+	{
+		return false;
+	}
+	else
+	{
+		size_t i = y - 1;
+		while (i >= 1 && cword.at(i).at(y) != '#')
+		{
+			a = a + cword.at(i).at(x);
+			i--;
+		}
+		invertstring(a);
+		if (wordexists(a) == false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+}
+bool  Cwords::adjdown( int x, int y) {
+	string a;
+	if (y == cword.size() - 1)
+	{
+		return false;
+	}
+	else
+	{
+		size_t i = y + 1;
+		while (i <= cword.size() - 1 && cword.at(i).at(x) != '#')
+		{
+			a = a + cword.at(i).at(x);
+			i++;
+		}
+		if (wordexists(a) == false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+}
+
+bool  Cwords::adjleft( int x, int y) {
+	string a;
+	if (x - 2 == 0)
+	{
+		return false;
+	}
+	else
+	{
+		size_t i = x - 2;
+		while (i >= 2 && cword.at(y).at(i) != '#')
+		{
+			a = a + cword.at(y).at(i);
+			i = i - 2;
+		}
+		invertstring(a);
+		if (wordexists(a) == false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+}
+bool  Cwords::adjright( int x, int y) {
+	string a;
+	if (x == cword.at(0).size() - 1)
+	{
+		return false;
+	}
+	else
+	{
+		size_t i = x + 2;
+		while (i <= cword.at(0).size() - 1 && cword.at(y).at(i) != '#')
+		{
+			a = a + cword.at(y).at(i);
+			i = i + 2;
+		}
+		if (wordexists(a) == false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+}
+
+void Cwords::fillempty() {
+	for (size_t i = 1; i < cword.size(); i++)
+	{
+		for (size_t j = 0; j < cword.at(0).size(); j++)
+		{
+			if (cword.at(i).at(j) == '.')
+			{
+				cword.at(i).at(j) = '#';
+			}
+		}
+	}
+	return;
+}
 void Cwords::removeword(string word) {
 	if (wordexists(word) == false)
 	{
@@ -388,7 +509,196 @@ void Cwords::removeword(string word) {
 		char a = xyo[0], A = xyo[1], o = xyo[2];
 		int b = a - 'a', B = A - 'A';
 		size_t posx = b * 2 + 2, posy = B + 1;
-		size_t linex = (cword.at(0).size() - 1) / 2;
+		switch (o)
+		{
+		case 'V': {
+			if (word.size() == cword.size() - 1)
+			{
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					cword.at(posy + i).at(posx) = '.';
+					return;
+				}
+				palex.erase(word);
+			}
+			else if (B == 0)
+			{
+				if (adjright(posx, posy + word.size()) == false && adjdown(posx, posy + word.size()) == false && adjleft(posx, posy + word.size()) == false)
+				{
+					for (size_t i = 0; i <= word.size(); i++)
+					{
+						cword.at(posy + i).at(posx) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+				else
+				{
+					for (size_t i = 0; i < word.size(); i++)
+					{
+						cword.at(posy + i).at(posx) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+
+			}
+			else if (cword.size() - posy == word.size())
+			{
+				if (adjright(posx, posy - 1) == false && adjdown(posx, posy - 1) == false && adjleft(posx, posy - 1) == false)
+				{
+					for (size_t i = 0; i <= word.size(); i++)
+					{
+						cword.at(posy - 1 + i).at(posx) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+				else
+				{
+					for (size_t i = 0; i < word.size(); i++)
+					{
+						cword.at(posy + i).at(posx) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+			}
+			else
+			{
+				if (adjright(posx, posy - 1) == false && adjdown(posx, posy - 1) == false && adjleft(posx, posy - 1) == false)
+				{
+					for (size_t i = 0; i <= word.size(); i++)
+					{
+						cword.at(posy - 1 + i).at(posx) = '.';
+					}
+					if (adjright(posx, posy + word.size()) == false && adjdown(posx, posy + word.size()) == false && adjleft(posx, posy + word.size()) == false)
+					{
+						cword.at(posy + word.size()).at(posx) = '.';
+					}
+					else
+					{
+					}
+					palex.erase(word);
+					return;
+				}
+				else
+				{
+					for (size_t i = 0; i < word.size(); i++)
+					{
+						cword.at(posy + i).at(posx) = '.';
+					}
+					if (adjright(posx, posy + word.size()) == false && adjdown(posx, posy + word.size()) == false && adjleft(posx, posy + word.size()) == false)
+					{
+						cword.at(posy + word.size()).at(posx) = '.';
+					}
+					else
+					{
+					}
+					palex.erase(word);
+					return;
+				}
+			}
+			break;
+		}
+		case 'H': {
+			size_t linex = (cword.at(0).size() - 1) / 2;
+			if (linex == word.size())
+			{
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					cword.at(posy).at(posx + i) = '.';
+				}
+				palex.erase(word);
+			}
+			else if (b == 0)
+			{
+				if (adjright(posx + word.size()*2, posy) == false && adjdown(posx + word.size() * 2, posy) == false && adjup(posx + word.size() * 2, posy) == false)
+				{
+					for (size_t i = 0; i <= word.size(); i++)
+					{
+						cword.at(posy).at(posx + i*2) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+				else
+				{
+					for (size_t i = 0; i < word.size(); i++)
+					{
+						cword.at(posy).at(posx + i*2) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+			}
+			else if (linex - b == word.size())
+			{
+				if (adjleft(posx - 2, posy) == false && adjdown(posx - 2, posy) == false && adjup(posx - 2, posy) == false)
+				{
+					for (size_t i = 0; i <= word.size(); i++)
+					{
+						cword.at(posy).at(posx + i * 2 - 2) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+				else
+				{
+					for (size_t i = 0; i < word.size(); i++)
+					{
+						cword.at(posy).at(posx + i * 2) = '.';
+					}
+					palex.erase(word);
+					return;
+				}
+			}
+			else
+			{
+				if (adjleft(posx - 2, posy) == false && adjdown(posx - 2, posy) == false && adjup(posx - 2, posy) == false)
+				{
+					for (size_t i = 0; i <= word.size(); i++)
+					{
+						cword.at(posy).at(posx + i * 2 - 2) = '.';
+					}
+					if (adjright(posx + word.size() * 2, posy) == false && adjdown(posx + word.size() * 2, posy) == false && adjup(posx + word.size() * 2, posy) == false)
+					{
+						cword.at(posy).at(posx + word.size() * 2) = '.';
+						return;
+					}
+					else
+					{
+					}
+					palex.erase(word);
+					return;
+				}
+				else
+				{
+					for (size_t i = 0; i < word.size(); i++)
+					{
+						cword.at(posy).at(posx + i * 2) = '.';
+					}
+					if (adjright(posx + word.size() * 2, posy) == false && adjdown(posx + word.size() * 2, posy) == false && adjup(posx + word.size() * 2, posy) == false)
+					{
+						cword.at(posy).at(posx + word.size() * 2) = '.';
+						return;
+					}
+					else
+					{
+					}
+					palex.erase(word);
+					return;
+				}
+			}
+			break;
+		}
+		default:
+			break;
+		}
 	}
 }
 	
+Cwords::~Cwords() {
+	palex.erase(palex.begin(), palex.end());
+	cword.erase(cword.begin(), cword.end());
+}
