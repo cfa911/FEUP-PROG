@@ -4,12 +4,43 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
 Cwords::Cwords(int x, int y)
 {
 	this->cword = emptycword(x, y);
+}
+
+Cwords::Cwords(ifstream file) {
+	string a;
+	size_t j = 0;
+	while (getline(file, a))
+	{
+		if (a[0] >= 'A' && a[0] <= 'Z')
+		{
+			cword.push_back(a);
+		}
+		else if (a[0] >= 'a' && a[0] <= 'z')
+		{
+			if (j == 0)
+			{
+				j++;
+			}
+			else
+			{
+				string ori;
+				size_t npos = a.find_first_of(" ");
+				ori = a.substr(0, npos);
+				a.erase(0, npos + 1);
+				palex.insert(std::pair<string, string>(a, ori));
+			}
+		}
+		else
+		{
+		}
+	}
 }
 
 vector<string> Cwords::emptycword(int x, int y)
@@ -497,6 +528,90 @@ void Cwords::fillempty() {
 	}
 	return;
 }
+
+bool Cwords::cwordisfull() {
+	for (size_t i = 1; i < cword.size(); i++)
+	{
+		for (size_t j = 0; j < cword.at(i).size(); j++)
+		{
+			if ((cword.at(i).at(j) < 'A' || cword.at(i).at(j) < 'Z') || cword.at(i).at(j) != ' ' || cword.at(i).at(j) != '#')
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+void Cwords::worddisappear(string word) {
+	if (this->palex.find(word) == this->palex.end())
+	{
+		cout << "Word doesn't exist" << endl;
+		return;
+	}
+	else
+	{
+		string xyo = this->palex.find(word)->second;
+		int a = xyo[0] - 'a', A = xyo[1] - 'A';
+		size_t posx = a * 2 + 2, posy = A + 1;
+		char o = xyo[2];
+		switch (o)
+		{
+		case 'V': {
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				cword.at(posy + i).at(posx) = '.';
+			}
+			break;
+		}
+		case 'H': {
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				cword.at(posy).at(posx + i * 2) = '.';
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	return; 
+}
+void Cwords::worddreappear(string word) {
+	if (this->palex.find(word) == this->palex.end())
+	{
+		cout << "Word doesn't exist" << endl;
+		return;
+	}
+	else
+	{
+		string xyo = this->palex.find(word)->second;
+		int a = xyo[0] - 'a', A = xyo[1] - 'A';
+		size_t posx = a * 2 + 2, posy = A + 1;
+		char o = xyo[2];
+		switch (o)
+		{
+		case 'V': {
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				cword.at(posy + i).at(posx) = word.at(i);
+			}
+			break;
+		}
+		case 'H': {
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				cword.at(posy).at(posx + i * 2) = word.at(i);
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	return;
+}
+
 void Cwords::removeword(string word) {
 	if (wordexists(word) == false)
 	{

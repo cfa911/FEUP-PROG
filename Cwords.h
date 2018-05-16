@@ -12,6 +12,7 @@ class Cwords
 {
 public:
 	Cwords(int x,int y);
+	Cwords(ifstream file);
 	vector<string> emptycword(int x, int y);
 	void printcword();
 	bool wordexists(string word);
@@ -23,6 +24,9 @@ public:
 	bool adjleft(int x, int y);
 	bool adjright(int x, int y);
 	void fillempty();
+	bool cwordisfull();
+	void worddisappear(string word);
+	void worddreappear(string word);
 	void removeword(string word);
 	~Cwords();
 

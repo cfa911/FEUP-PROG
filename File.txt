@@ -1463,7 +1463,7 @@ Demand: claim, require, ask for, call for, insist
 Demarcation: definition, outline, sketch, delineation, bounding, inclosure, plan, limitation
 Democratic: popular, leveling, radical, subversive, unlicensed, unarculca, destructive, republican
 Demoniacal: fiendish, hell, ish, diabolical
-Demonstrate: prove, show, exhibit, manifest, evince, illustrate, ant: \r\, disprove, conceal, misdemonstrate-strafe, misexemplify
+Demonstrate: prove, show, exhibit, manifest, evince, illustrate
 Demulcent: soothing, softening, allaying, lenitive
 Demur: dubitate, hesitate, halt, pause, doubt, scruple, object
 Demure: sedate, staid, grave, modest, downcast, sober, dispassionate, prudish, discreet
@@ -2538,7 +2538,7 @@ Illustrate: elucidate, interpret, exemplify, demonstrate, represent, explain, em
 Illustrious: renowned, glorious, brilliant, deathless, eminent, distinguished, celebrated, conspicuous, noble, famous
 Ill: antipathy, hatred, malevolence, dislike, aversion
 Image: statue, likeness, representation, effigy, copy, metaphor, idea, conception, fiction, shadow, picture, vision
-Imagery: poetry, fancy, illustration, metaphor, similitude, ant: \r\, prose, statement, fact
+Imagery: poetry, fancy, illustration, metaphor, similitude
 Imaginative: creative, conceptive, ideal, poetical, romantic, inventive, original Ill
 Imagine: conceive, suppose, surmise, understand, fancy, fabricate, deem, presume, think, apprehend
 Imbecile: foolish, idiotic, fatuous
@@ -3555,7 +3555,7 @@ Official: administrative, authoritative, negotiative, functional, professional
 Officiate: act, serve, perform
 Officious: meddling, interfering, pushing, forward, intrusive, intermeddling
 Often: frequently, repeatedly
-Ogre: spectre, goblin, hobgoblin, , bugbear
+Ogre: spectre, goblin, hobgoblin, bugbear
 Old: aged, pristine, long-standing, ancient, preceding, antiquated, obsolete, senile antique
 Oleaginous: oily, unctuous, pulchritudinous
 Omen: augury, sign, presage, portent, forboding, prognostic

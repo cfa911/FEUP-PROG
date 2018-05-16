@@ -1,7 +1,2 @@
 ﻿  Puzzle.cpp
-  Cwords.cpp
-c:\users\mrhit\documents\github\projprog\cwords.cpp(22): warning C4018: '<': incompatibilidade de signed/unsigned
-c:\users\mrhit\documents\github\projprog\cwords.cpp(26): warning C4018: '<': incompatibilidade de signed/unsigned
-c:\users\mrhit\documents\github\projprog\cwords.cpp(50): warning C4018: '<': incompatibilidade de signed/unsigned
-  Gerando Código...
   Project9.vcxproj -> C:\Users\MrHit\Documents\GitHub\ProjProg\Debug\Project9.exe
