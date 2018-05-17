@@ -1,2 +1,2 @@
-﻿  Cwords.cpp
-  Project9.vcxproj -> C:\Users\MrHit\Documents\GitHub\ProjProg\Debug\Project9.exe
+﻿  Dictionary.cpp
+c:\users\cfa91\onedrive\documentos\github\projprog\dictionary.cpp(91): error C3861: 'dividestring': identifier not found

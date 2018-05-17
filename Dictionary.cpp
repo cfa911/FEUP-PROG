@@ -13,7 +13,47 @@ Dictionary::Dictionary()
 }
 
 Dictionary::Dictionary(ifstream file) {
-
+	map <string, vector<string>> sword_map;
+	if (file.is_open()) {
+		while (!file.eof())
+		{
+			vector<string> synonims;
+			string line;
+			string word;
+			string sword;
+			string sline;
+			int i = 0;
+			getline(file, line);
+			word = line.substr(0, line.find(":"));
+			size_t pos = line.find(" ");
+			sline = line.substr(pos + 1);
+			sword = "";
+			while (sline.length() != 0) {
+				if (sline[i] == ',') {
+					synonims.push_back(sword);
+					if (sline.length() == sword.length() + 1)
+						break;
+					if (sline[i + 1] == ' ' && sline[i + 2] == ',') { //caso especial de ", ,"
+						i += 4;
+						sword = "";
+					}
+					else { // casos normais
+						sline = sline.substr(i + 2);
+						sword = "";
+						i = 0;
+					}
+				}
+				else if (sline.length() == i + 1) { // caso "palavra," e fim de linha
+					sword += sline[i];
+					synonims.push_back(sword);
+					break;
+				}
+				sword += sline[i];
+				i++;
+			}
+			sword_map.insert(std::pair<string, vector<string>>(word, synonims));
+		}
+	}
 }
 void removespaces(string &token) {
 	size_t ps = token.find_first_not_of(" ");
