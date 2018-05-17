@@ -1,2 +1,11 @@
-﻿  Main.cpp
+﻿  Puzzle.cpp
+  Main.cpp
+  Dictionary.cpp
+  Cwords.cpp
+  Colors.cpp
+  Board.cpp
+c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(15): warning C4018: '<': signed/unsigned mismatch
+c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(19): warning C4018: '<': signed/unsigned mismatch
+c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(43): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   Project9.vcxproj -> C:\Users\cfa91\OneDrive\Documentos\Github\ProjProg\Debug\Project9.exe

@@ -15,6 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Colors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Cwords.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -27,14 +33,11 @@
     <ClCompile Include="Puzzle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Colors.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Cwords.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -44,14 +47,8 @@
     <ClInclude Include="Puzzle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="File.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="Words.txt">
       <Filter>Resource Files</Filter>
     </Text>

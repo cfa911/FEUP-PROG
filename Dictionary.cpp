@@ -25,11 +25,19 @@ Dictionary::Dictionary(ifstream& file) {
 			int i = 0;
 			getline(file, line);
 			word = line.substr(0, line.find(":"));
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				word.at(i) = toupper(word.at(i));
+			}
 			size_t pos = line.find(" ");
 			sline = line.substr(pos + 1);
 			sword = "";
 			while (sline.length() != 0) {
 				if (sline[i] == ',') {
+					for (size_t i = 0; i < sword.size(); i++)
+					{
+						sword.at(i) = toupper(sword.at(i));
+					}
 					synonims.push_back(sword);
 					if (sline.length() == sword.length() + 1)
 						break;
@@ -45,6 +53,10 @@ Dictionary::Dictionary(ifstream& file) {
 				}
 				else if (sline.length() == i + 1) { // caso "palavra," e fim de linha
 					sword += sline[i];
+					for (size_t i = 0; i < sword.size(); i++)
+					{
+						sword.at(i) = toupper(sword.at(i));
+					}
 					synonims.push_back(sword);
 					break;
 				}
@@ -127,11 +139,19 @@ void Dictionary::insertwords(ifstream& file)
 			int i = 0;
 			getline(file, line);
 			word = line.substr(0, line.find(":"));
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				word.at(i) = toupper(word.at(i));
+			}
 			size_t pos = line.find(" ");
 			sline = line.substr(pos + 1);
 			sword = "";
 			while (sline.length() != 0) {
 				if (sline[i] == ',') {
+					for (size_t i = 0; i < sword.size(); i++)
+					{
+						sword.at(i) = toupper(sword.at(i));
+					}
 					synonims.push_back(sword);
 					if (sline.length() == sword.length() + 1)
 						break;
@@ -147,6 +167,10 @@ void Dictionary::insertwords(ifstream& file)
 				}
 				else if (sline.length() == i + 1) { // caso "palavra," e fim de linha
 					sword += sline[i];
+					for (size_t i = 0; i < sword.size(); i++)
+					{
+						sword.at(i) = toupper(sword.at(i));
+					}
 					synonims.push_back(sword);
 					break;
 				}
