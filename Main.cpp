@@ -44,7 +44,7 @@ int main() {
 		case 1: {
 			string my_dictionary_name;
 			ifstream my_dictionary;
-			cout << "Name of the dictionary?" << endl;
+			cout << "Dictionary file name ? " << endl;
 			cin >> my_dictionary_name;
 			my_dictionary.open(my_dictionary_name);
 			if (!my_dictionary.is_open())
@@ -63,7 +63,7 @@ int main() {
 					words.insertword(a);
 				} */// Eliminar futuramente
 				int x = 0, y = 0;
-				cout << "What are the propotions?" << endl;
+				cout << "Board size (lines columns) ? " << endl;
 				while (x == 0 || y == 0)
 				{
 					cin >> x >> y;
@@ -71,8 +71,10 @@ int main() {
 				Cwords puzzle(x, y);
 				string pos, word; 
 				puzzle.printboard();
-				cout << "Position (LCD / CTRL + Z = stop) ?";
+				cout << "Position (LCD / CTRL + Z = stop ) ?";
 				cin >> pos;
+				cout << "Word ( - = remove / ? = help ) .. ?";
+				cin >> word;
 				while (!cin.eof())
 				{
 					if (pos.size() > 3 || (tolower(pos.at(0)) > 'z' || tolower(pos.at(0)) < 'a') || (toupper(pos.at(1)) > 'Z' || toupper(pos.at(1)) < 'A') || (toupper(pos.at(2)) != 'V' && toupper(pos.at(2)) != 'H'))
