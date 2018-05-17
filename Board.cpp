@@ -66,6 +66,12 @@ Board::Board(int x, int y)
 	}
 	board = crossword;
 }
+Board::Board(vector<string> bfile) {
+	for (size_t i = 0; i < bfile.size(); i++)
+	{
+		board.push_back(bfile.at(i));
+	}
+}
 
 void Board::printBoard() {
 	for (size_t i = 0; i < board.size(); i++)
@@ -345,5 +351,19 @@ bool Board::spaceoccupied(string word, int x, int y, char orientation) {
 	default:
 		return true;
 		break;
+	}
+}
+
+void Board::fill() {
+	char s = '#' ;
+	for (size_t i = 1; i < board.size(); i++)
+	{
+		for (size_t j = 0; j < board.at(i).size(); j++)
+		{
+			if (board.at(i).at(j) == '.')
+			{
+				board.at(i).at(j) = s;
+			}
+		}
 	}
 }

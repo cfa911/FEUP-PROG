@@ -19,40 +19,49 @@ bool cmpboards(Board board1, Board board2) {
 	}
 	return true;
 }
-Cwords::Cwords(int x, int y)
+
+Cwords::Cwords(int x, int y, string filename)
 {
 	board = Board(x,y);
+	dictionary = filename;
 }
 
-/*Cwords::Cwords(ifstream file) {
-	string a;
-	size_t j = 0;
+Cwords::Cwords(ifstream file) {
+	string a, pos;
+	vector<string> b;
+	size_t j = 0, i = 0, npos;
 	while (getline(file, a))
 	{
-		if (a[0] >= 'A' && a[0] <= 'Z')
+		if (a.size() == 0)
 		{
-			cword.push_back(a);
+			j++;
 		}
-		else if (a[0] >= 'a' && a[0] <= 'z')
+		else if (j == 0)
 		{
-			if (j == 0)
-			{
-				j++;
-			}
-			else
-			{
-				string ori;
-				size_t npos = a.find_first_of(" ");
-				ori = a.substr(0, npos);
-				a.erase(0, npos + 1);
-				palex.insert(std::pair<string, string>(a, ori));
-			}
+			dictionary = a;
+		}
+		else if (j == 1)
+		{
+			b.push_back(a);
 		}
 		else
 		{
+			if (i == 0)
+			{
+				Board brd(b);
+				board = brd;
+				i++;
+			}
+			else
+			{
+				npos = a.find_first_of(" ");
+				pos = a.substr(0, npos);
+				a.erase(0, npos + 1);
+				palex.insert(std::pair<string, string>(a, pos));
+			}
 		}
 	}
-}*/
+}
 
 void Cwords::printboard() {
 	board.printBoard();
@@ -241,15 +250,23 @@ bool  Cwords::adjright( int x, int y) {
 }
 
 
-void Cwords::removeword(string word) {
-	if (wordexists(word) == false)
+void Cwords::removeword(string xyo) {
+	string word;
+	map<string, string>::iterator it;
+	for ( it = palex.begin(); it != palex.end(); it++)
+	{
+		if (it->second == xyo)
+		{
+			word = it->first;
+		}
+	}
+	if (word.size() == 0)
 	{
 		cout << "The word doesn't exist in the crossword" << endl;
 		return;
 	}
 	else
 	{
-		string xyo = palex.find(word)->second;
 		char a = xyo[0], A = xyo[1], o = xyo[2], s = '.';
 		int b = a - 'a', B = A - 'A';
 		size_t posx = b * 2 + 2, posy = B + 1;
@@ -454,6 +471,28 @@ void Cwords::removeword(string word) {
 		default:
 			break;
 		}
+	}
+}
+
+void Cwords::saveinfile(string filename) {
+	ofstream my_file;
+	vector<string> a = board.vec();
+	my_file.open(filename);
+	if (!my_file.is_open())
+	{
+		cout << "Error in saving the file" << endl;
+		return;
+	}
+	else
+	{
+		board.fill();
+		my_file << dictionary << endl;
+		my_file << endl;
+		for (size_t i = 0; i < a.size(); i++)
+		{
+			my_file << a.at(i);
+		}
+		my_file << endl;
 	}
 }
 	

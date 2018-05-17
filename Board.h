@@ -11,7 +11,7 @@ class Board
 public:
 	Board();
 	Board(int x, int y);
-	Board(ifstream file);
+	Board(vector<string> bfile);
 	void printBoard();
 	void insertWBoard(string word, size_t posx, size_t posy, char ori);
 	void changechar(char s, size_t posx, size_t posy);
@@ -23,6 +23,7 @@ public:
 	string wleft(int x, int y);
 	string wright(int x, int y);
 	bool spaceoccupied(string word, int x, int y, char orientation);
+	void fill();
 	
 private:
 	vector<string> board;

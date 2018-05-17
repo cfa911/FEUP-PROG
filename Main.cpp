@@ -10,9 +10,38 @@
 
 using namespace std;
 
+void changefilename(int it, string &filename) {
+	string a = to_string(it);
+	size_t b = a.size();
+		switch (b)
+		{
+		case 1: {
+				filename[3] = a[0];
+		}
+		case 2: {
+
+			for (size_t i = 0; i < a.size(); i++)
+			{
+				filename[2 + i] = a[i];
+			}
+			break;
+		}
+		case 3: {
+			for (size_t i = 0; i < a.size(); i++)
+			{
+				filename[i + 1] = a[i];
+			}
+			break;
+		}
+		default:
+			break;
+		};
+	return;
+}
 
 int main() {
-	int it = 0;
+	string save_file_name = "b000.txt";
+	int it = -1;
 	int op;
 	bool loop = true;
 	string my_file_name, line;
@@ -58,23 +87,17 @@ int main() {
 				string a;
 				Dictionary words;
 				words.insertwords(my_dictionary);
-				/*while (getline(my_dictionary, a))
-				{
-					words.insertword(a);
-				} */// Eliminar futuramente
 				int x = 0, y = 0;
 				cout << "Board size (lines columns) ? " << endl;
 				while (x == 0 || y == 0)
 				{
 					cin >> x >> y;
 				}
-				Cwords puzzle(x, y);
-				string pos, word; 
+				Cwords puzzle(x, y, my_dictionary_name);
+				string pos, word;
 				puzzle.printboard();
-				cout << "Position (LCD / CTRL + Z = stop ) ?";
+				cout << "Position (LCD / CTRL + Z = stop ) ? ";
 				cin >> pos;
-				cout << "Word ( - = remove / ? = help ) .. ?";
-				cin >> word;
 				while (!cin.eof())
 				{
 					if (pos.size() > 3 || (tolower(pos.at(0)) > 'z' || tolower(pos.at(0)) < 'a') || (toupper(pos.at(1)) > 'Z' || toupper(pos.at(1)) < 'A') || (toupper(pos.at(2)) != 'V' && toupper(pos.at(2)) != 'H'))
@@ -86,10 +109,39 @@ int main() {
 						pos.at(0) = tolower(pos.at(0));
 						pos.at(1) = toupper(pos.at(1));
 						pos.at(2) = toupper(pos.at(2));
+						cout << "Word (- = remove / ? = help) .. ? " << endl;
+						cin >> word;
+						for (size_t i = 0; i < word.size(); i++)
+						{
+							word.at(i) = toupper(word.at(i));
+						}
+						if (word == "-")
+						{
+							puzzle.removeword(pos);
+						}
+						else if (word == "?")
+						{
+
+						}
+						else
+						{
+							if (words.wordexists(word) == true)
+							{
+								puzzle.insertword(pos, word);
+							}
+							else
+							{
+								cout << "Word doesn't exist in the dictionary" << endl;
+							}
+						}
 					}
+					puzzle.printboard();
+					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
+					cin >> pos;
 				}
 				
 			}
+			cin.clear();
 			break;
 		}
 		case 2: {

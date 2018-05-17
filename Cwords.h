@@ -12,7 +12,7 @@ using namespace std;
 class Cwords
 {
 public:
-	Cwords(int x,int y);
+	Cwords(int x,int y, string filename);
 	Cwords(ifstream file);
 	void printboard();
 	bool wordexists(string word);
@@ -23,9 +23,11 @@ public:
 	bool adjleft(int x, int y);
 	bool adjright(int x, int y);
 	void removeword(string word);
+	void saveinfile(string filename);
 	~Cwords();
 
 private:
+	string dictionary;
 	Board board;
 	map<string,string> palex;
 };

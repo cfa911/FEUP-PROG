@@ -12,7 +12,6 @@ class Dictionary
 public:
 	Dictionary();
 	Dictionary(ifstream& file);
-	//void insertword(string line);
 	void insertwords(ifstream& file);
 	bool wordexists(string word);
 private:
