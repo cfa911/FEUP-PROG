@@ -8,12 +8,23 @@
 
 using namespace std;
 
+bool cmpboards(Board board1, Board board2) {
+	vector<string> a = board1.vec(), b = board2.vec();
+	for (size_t i = 0; i < a.size(); i++)
+	{
+		if (a[i].compare(b[i]) != 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
 Cwords::Cwords(int x, int y)
 {
-	this->cword = emptycword(x, y);
+	board = Board(x,y);
 }
 
-Cwords::Cwords(ifstream file) {
+/*Cwords::Cwords(ifstream file) {
 	string a;
 	size_t j = 0;
 	while (getline(file, a))
@@ -41,76 +52,12 @@ Cwords::Cwords(ifstream file) {
 		{
 		}
 	}
+}*/
+
+void Cwords::printboard() {
+	board.printBoard();
 }
 
-vector<string> Cwords::emptycword(int x, int y)
-{
-	vector<string> crossword;
-	crossword.resize(y + 1);
-	string a;
-	int b = x * 2 + 1, d = 0;
-	char c = 'a', C = 'A';
-	for (size_t i = 0; i < y + 1; i++)
-	{
-		if (i == 0)
-		{
-			for (size_t j = 0; j < b; j++)
-			{
-				if (j == 0)
-				{
-					a = a + " ";
-				}
-				else if (j % 2 != 0)
-				{
-					a = a + " ";
-				}
-				else
-				{
-					c = c + d;
-					a = a + c;
-					d = 1;
-				}
-				
-			}
-			crossword[i] = a;
-			a.clear();
-		}
-		else
-		{
-			d = 0;
-			for (size_t j = 0; j < b; j++)
-			{
-				if (j == 0)
-				{
-					a = a + C;
-				}
-				else
-				{
-					if (j % 2 != 0)
-					{
-						a = a + " ";
-					}
-					else
-					{
-						a = a + ".";
-					}
-				}
-				d = 1;
-			}
-			crossword[i] = a;
-			a.clear();
-			C++;
-		}
-	}
-	return crossword;
-}
-
-void Cwords::printcword() {
-	for (size_t i = 0; i < this->cword.size(); i++)
-	{
-		cout << this->cword[i] << endl;
-	}
-}
 
 bool Cwords::wordexists(string word) {
 	if (this->palex.find(word) == this->palex.end())
@@ -125,7 +72,7 @@ bool Cwords::wordexists(string word) {
 
 bool Cwords::wordfits(string word, int x, int y, char orientation) {
 	char a = toupper(orientation);
-	size_t line_s = this->cword.at(0).size(), colun_s = this->cword.size();
+	size_t line_s = board.bssize(), colun_s = board.bsize();
 	switch (a)
 	{
 	case 'V':
@@ -173,73 +120,7 @@ bool Cwords::wordfits(string word, int x, int y, char orientation) {
 		break;
 	}
 }
-bool Cwords::spaceocuppied(string word, int x, int y, char orientation) {
-	size_t posx = x*2 + 2, posy = y + 1;
-	switch (toupper(orientation))
-	{
-	case 'H': {
-		for (size_t i = 0; i < word.size(); i++)
-		{
-			if (cword.at(posy).at(posx + i*2) == '.')
-			{
-				continue;
-			}
-			else
-			{
-				if (cword.at(posy).at(posx + i * 2) == '#')
-				{
-					return true;
-				}
-				else if (cword.at(posy).at(posx + i * 2) >= 'A' && cword.at(posy).at(posx + i * 2) >= 'Z')
-				{
-					if (cword.at(posy).at(posx + i * 2) == word.at(i))
-					{
-						continue;
-					}
-					else
-					{
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-		break;
-	}
-	case 'V': {
-		for (size_t i = 0; i < word.size(); i++)
-		{
-			if (cword.at(posy + i).at(posx) == '.')
-			{
-				continue;
-			}
-			else
-			{
-				if (cword.at(posy + i).at(posx) == '#')
-				{
-					return true;
-				}
-				else if (cword.at(posy +  i).at(posx) >= 'A' && cword.at(posy + i).at(posx) >= 'Z')
-				{
-					if (cword.at(posy + i).at(posx) == word.at(i))
-					{
-						continue;
-					}
-					else
-					{
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-		break;
-	}
-	default:
-		return true;
-		break;
-	}
-}
+
 
 void Cwords::insertword(string xyo, string word) {
 	if (wordexists(word) == true)
@@ -258,7 +139,7 @@ void Cwords::insertword(string xyo, string word) {
 		}
 		else
 		{
-			if (spaceocuppied(word, b, B, o) == true)
+			if (board.spaceoccupied(word, b, B, o) == true)
 			{
 				cout << "The could not be placed in those coordinates" << endl;
 				return;
@@ -266,153 +147,19 @@ void Cwords::insertword(string xyo, string word) {
 			else
 			{
 				size_t posx = b * 2 + 2, posy = B + 1;
-				size_t linex = (cword.at(0).size() - 1) / 2;
-				switch (o)
+				Board temp = this->board;
+				this->board.insertWBoard(word, posx, posy, o);
+				if (cmpboards(temp,board) == true)
 				{
-				case 'V': {
-					if (word.size() == cword.size() - 1)
-					{
-						for (size_t i = 0; i < word.size(); i++)
-						{
-							cword.at(posy + i).at(posx) = word.at(i);
-							palex.insert(std::pair<string, string>(word,xyo));
-						}
-					}
-					else if (B == 0)
-					{
-						if (cword.at(posy + word.size()).at(posx) != '.' && cword.at(posy + word.size()).at(posx) != '#')
-						{
-							cout << "Could not place the word" << endl;
-							return;
-						}
-						else
-						{
-							cword.at(posy + word.size()).at(posx) = '#';
-							for (size_t i = 0; i < word.size(); i++)
-							{
-								cword.at(posy + i).at(posx) = word.at(i);
-							}
-							palex.insert(std::pair<string, string>(word, xyo));
-						}
-
-					}
-					else if (cword.size() - posy == word.size())
-					{
-						if (cword.at(posy - 1).at(posx) != '.' && cword.at(posy - 1).at(posx) != '#')
-						{
-							cout << "Could not place the word" << endl;
-							return;
-						}
-						else
-						{
-							cword.at(posy - 1).at(posx) = '#';
-							for (size_t i = 0; i < word.size(); i++)
-							{
-								cword.at(posy + i).at(posx) = word.at(i);
-							}
-							palex.insert(std::pair<string, string>(word, xyo));
-						}
-					}
-					else
-					{
-						if ((cword.at(posy - 1).at(posx) != '.' && cword.at(posy - 1).at(posx) != '#') || (cword.at(posy + word.size()).at(posx) != '.' && cword.at(posy + word.size()).at(posx) != '#'))
-						{
-							cout << "Could not place the word" << endl;
-							return;
-						}
-						else
-						{
-							cword.at(posy - 1).at(posx) = '#';
-							cword.at(posy + word.size()).at(posx) = '#';
-							for (size_t i = 0; i < word.size(); i++)
-							{
-								cword.at(posy + i).at(posx) = word.at(i);
-							}
-							palex.insert(std::pair<string, string>(word, xyo));
-						}
-					}
-					break;
+					return;
 				}
-				case 'H': {
-					if (linex == word.size())
-					{
-						for (size_t i = 0; i < word.size(); i++)
-						{
-							cword.at(posy).at(posx + i * 2) = word.at(i);
-						}
-						palex.insert(std::pair<string, string>(word, xyo));
-					}
-					else if (b == 0)
-					{
-						if ((cword.at(posy).at(posx + word.size() * 2) != '.') && (cword.at(posy).at(posx + word.size() * 2) != '#'))
-						{
-							cout << "Could not place the word" << endl;
-							return;
-						}
-						else
-						{
-							cword.at(posy).at(posx + word.size() * 2) = '#';
-							for (size_t i = 0; i < word.size(); i++)
-							{
-								cword.at(posy).at(posx + i * 2) = word.at(i);
-							}
-							palex.insert(std::pair<string, string>(word, xyo));
-						}
-					}
-					else if (linex - b == word.size())
-					{
-						if ((cword.at(posy).at(posx - 1 * 2) != '.') && (cword.at(posy).at(posx - 1 * 2) != '#'))
-						{
-							cout << "Could not place the word" << endl;
-							return;
-						}
-						else
-						{
-							cword.at(posy).at(posx - 1 * 2) = '#';
-							for (size_t i = 0; i < word.size(); i++)
-							{
-								cword.at(posy).at(posx + i * 2) = word.at(i);
-							}
-							palex.insert(std::pair<string, string>(word, xyo));
-						}
-					}
-					else
-					{
-						if (((cword.at(posy).at(posx - 1 * 2) != '.') && (cword.at(posy).at(posx - 1 * 2) != '#')) || ((cword.at(posy).at(posx + word.size() * 2) != '.') && (cword.at(posy).at(posx + word.size() * 2) != '#')))
-						{
-							cout << "Could not place the word" << endl;
-							return;
-						}
-						else
-						{
-							cword.at(posy).at(posx + word.size() * 2) = '#';
-							cword.at(posy).at(posx - 1 * 2) = '#';
-							for (size_t i = 0; i < word.size(); i++)
-							{
-								cword.at(posy).at(posx + i * 2) = word.at(i);
-							}
-							palex.insert(std::pair<string, string>(word, xyo));
-						}
-					}
-				}
-				default:
-					break;
+				else
+				{
+					palex.insert(std::pair<string, string>(word, xyo));
 				}
 			}
 		}
 	}
-}
-void invertstring(string &word) {
-	size_t i = 0;
-	char temp;
-	while (i <= word.size() - 1 - i)
-	{
-		temp = word.at(word.size() - 1 - i);
-		word.at(word.size() - 1 - i) = word.at(i);
-		word.at(i) = temp;
-		i++;
-	}
-	return;
 }
 
 bool  Cwords::adjup(int x, int y) {
@@ -423,13 +170,7 @@ bool  Cwords::adjup(int x, int y) {
 	}
 	else
 	{
-		size_t i = y - 1;
-		while (i >= 1 && cword.at(i).at(y) != '#')
-		{
-			a = a + cword.at(i).at(x);
-			i--;
-		}
-		invertstring(a);
+		a = board.wup(x, y);
 		if (wordexists(a) == false)
 		{
 			return false;
@@ -442,18 +183,13 @@ bool  Cwords::adjup(int x, int y) {
 }
 bool  Cwords::adjdown( int x, int y) {
 	string a;
-	if (y == cword.size() - 1)
+	if (y == board.bsize() - 1)
 	{
 		return false;
 	}
 	else
 	{
-		size_t i = y + 1;
-		while (i <= cword.size() - 1 && cword.at(i).at(x) != '#')
-		{
-			a = a + cword.at(i).at(x);
-			i++;
-		}
+		a = board.wdown(x, y);
 		if (wordexists(a) == false)
 		{
 			return false;
@@ -473,13 +209,7 @@ bool  Cwords::adjleft( int x, int y) {
 	}
 	else
 	{
-		size_t i = x - 2;
-		while (i >= 2 && cword.at(y).at(i) != '#')
-		{
-			a = a + cword.at(y).at(i);
-			i = i - 2;
-		}
-		invertstring(a);
+		a = board.wleft(x, y);
 		if (wordexists(a) == false)
 		{
 			return false;
@@ -492,18 +222,13 @@ bool  Cwords::adjleft( int x, int y) {
 }
 bool  Cwords::adjright( int x, int y) {
 	string a;
-	if (x == cword.at(0).size() - 1)
+	if (x == board.bssize() - 1)
 	{
 		return false;
 	}
 	else
 	{
-		size_t i = x + 2;
-		while (i <= cword.at(0).size() - 1 && cword.at(y).at(i) != '#')
-		{
-			a = a + cword.at(y).at(i);
-			i = i + 2;
-		}
+		a = board.wright(x, y);
 		if (wordexists(a) == false)
 		{
 			return false;
@@ -515,102 +240,6 @@ bool  Cwords::adjright( int x, int y) {
 	}
 }
 
-void Cwords::fillempty() {
-	for (size_t i = 1; i < cword.size(); i++)
-	{
-		for (size_t j = 0; j < cword.at(0).size(); j++)
-		{
-			if (cword.at(i).at(j) == '.')
-			{
-				cword.at(i).at(j) = '#';
-			}
-		}
-	}
-	return;
-}
-
-bool Cwords::cwordisfull() {
-	for (size_t i = 1; i < cword.size(); i++)
-	{
-		for (size_t j = 0; j < cword.at(i).size(); j++)
-		{
-			if ((cword.at(i).at(j) < 'A' || cword.at(i).at(j) < 'Z') || cword.at(i).at(j) != ' ' || cword.at(i).at(j) != '#')
-			{
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-void Cwords::worddisappear(string word) {
-	if (this->palex.find(word) == this->palex.end())
-	{
-		cout << "Word doesn't exist" << endl;
-		return;
-	}
-	else
-	{
-		string xyo = this->palex.find(word)->second;
-		int a = xyo[0] - 'a', A = xyo[1] - 'A';
-		size_t posx = a * 2 + 2, posy = A + 1;
-		char o = xyo[2];
-		switch (o)
-		{
-		case 'V': {
-			for (size_t i = 0; i < word.size(); i++)
-			{
-				cword.at(posy + i).at(posx) = '.';
-			}
-			break;
-		}
-		case 'H': {
-			for (size_t i = 0; i < word.size(); i++)
-			{
-				cword.at(posy).at(posx + i * 2) = '.';
-			}
-			break;
-		}
-		default:
-			break;
-		}
-	}
-	return; 
-}
-void Cwords::worddreappear(string word) {
-	if (this->palex.find(word) == this->palex.end())
-	{
-		cout << "Word doesn't exist" << endl;
-		return;
-	}
-	else
-	{
-		string xyo = this->palex.find(word)->second;
-		int a = xyo[0] - 'a', A = xyo[1] - 'A';
-		size_t posx = a * 2 + 2, posy = A + 1;
-		char o = xyo[2];
-		switch (o)
-		{
-		case 'V': {
-			for (size_t i = 0; i < word.size(); i++)
-			{
-				cword.at(posy + i).at(posx) = word.at(i);
-			}
-			break;
-		}
-		case 'H': {
-			for (size_t i = 0; i < word.size(); i++)
-			{
-				cword.at(posy).at(posx + i * 2) = word.at(i);
-			}
-			break;
-		}
-		default:
-			break;
-		}
-	}
-	return;
-}
 
 void Cwords::removeword(string word) {
 	if (wordexists(word) == false)
@@ -621,29 +250,39 @@ void Cwords::removeword(string word) {
 	else
 	{
 		string xyo = palex.find(word)->second;
-		char a = xyo[0], A = xyo[1], o = xyo[2];
+		char a = xyo[0], A = xyo[1], o = xyo[2], s = '.';
 		int b = a - 'a', B = A - 'A';
 		size_t posx = b * 2 + 2, posy = B + 1;
+		string temp;
 		switch (o)
 		{
 		case 'V': {
-			if (word.size() == cword.size() - 1)
+			if (word.size() == board.bsize() - 1)
 			{
 				for (size_t i = 0; i < word.size(); i++)
 				{
-					cword.at(posy + i).at(posx) = '.';
-					return;
+					temp = board.wleft((int)posx, (int)posy + i) + word[i] + board.wright((int)posx, (int)posy + i);
+					if (wordexists(temp) == false)
+					{
+						board.changechar(s, posx, posy + i);
+					}
 				}
 				palex.erase(word);
+				return;
 			}
 			else if (B == 0)
 			{
 				if (adjright(posx, posy + word.size()) == false && adjdown(posx, posy + word.size()) == false && adjleft(posx, posy + word.size()) == false)
 				{
-					for (size_t i = 0; i <= word.size(); i++)
+					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy + i).at(posx) = '.';
+						temp = board.wleft((int)posx, (int)posy + i) + word[i] + board.wright((int)posx, (int)posy + i);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx, posy + i);
+						}
 					}
+					board.changechar(s, posx, posy + word.size());
 					palex.erase(word);
 					return;
 				}
@@ -651,21 +290,30 @@ void Cwords::removeword(string word) {
 				{
 					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy + i).at(posx) = '.';
+						temp = board.wleft((int)posx, (int)posy + i) + word[i] + board.wright((int)posx, (int)posy + i);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx, posy + i);
+						}
 					}
 					palex.erase(word);
 					return;
 				}
 
 			}
-			else if (cword.size() - posy == word.size())
+			else if (board.bsize() - posy == word.size())
 			{
 				if (adjright(posx, posy - 1) == false && adjdown(posx, posy - 1) == false && adjleft(posx, posy - 1) == false)
 				{
-					for (size_t i = 0; i <= word.size(); i++)
+					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy - 1 + i).at(posx) = '.';
+						temp = board.wleft((int)posx, (int)posy + i) + word[i] + board.wright((int)posx, (int)posy + i);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx, posy + i);
+						}
 					}
+					board.changechar(s, posx, posy - 1);
 					palex.erase(word);
 					return;
 				}
@@ -673,7 +321,11 @@ void Cwords::removeword(string word) {
 				{
 					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy + i).at(posx) = '.';
+						temp = board.wleft((int)posx, (int)posy + i) + word[i] + board.wright((int)posx, (int)posy + i);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx, posy + i);
+						}
 					}
 					palex.erase(word);
 					return;
@@ -683,46 +335,36 @@ void Cwords::removeword(string word) {
 			{
 				if (adjright(posx, posy - 1) == false && adjdown(posx, posy - 1) == false && adjleft(posx, posy - 1) == false)
 				{
-					for (size_t i = 0; i <= word.size(); i++)
-					{
-						cword.at(posy - 1 + i).at(posx) = '.';
-					}
-					if (adjright(posx, posy + word.size()) == false && adjdown(posx, posy + word.size()) == false && adjleft(posx, posy + word.size()) == false)
-					{
-						cword.at(posy + word.size()).at(posx) = '.';
-					}
-					else
-					{
-					}
-					palex.erase(word);
-					return;
+					board.changechar(s, posx, posy - 1);
 				}
-				else
+				if (adjright(posx, posy + word.size()) == false && adjdown(posx, posy + word.size()) == false && adjleft(posx, posy + word.size()) == false)
 				{
-					for (size_t i = 0; i < word.size(); i++)
-					{
-						cword.at(posy + i).at(posx) = '.';
-					}
-					if (adjright(posx, posy + word.size()) == false && adjdown(posx, posy + word.size()) == false && adjleft(posx, posy + word.size()) == false)
-					{
-						cword.at(posy + word.size()).at(posx) = '.';
-					}
-					else
-					{
-					}
-					palex.erase(word);
-					return;
+					board.changechar(s, posx, posy + word.size());
 				}
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					temp = board.wleft((int)posx, (int)posy + i) + word[i] + board.wright((int)posx, (int)posy + i);
+					if (wordexists(temp) == false)
+					{
+						board.changechar(s, posx, posy + i);
+					}
+				}
+				palex.erase(word);
+				return;
 			}
 			break;
 		}
 		case 'H': {
-			size_t linex = (cword.at(0).size() - 1) / 2;
+			size_t linex = (board.bssize() - 1) / 2;
 			if (linex == word.size())
 			{
 				for (size_t i = 0; i < word.size(); i++)
 				{
-					cword.at(posy).at(posx + i) = '.';
+					temp = board.wup((int)posx + i*2, (int)posy) + word[i] + board.wdown((int)posx + i*2, (int)posy);
+					if (wordexists(temp) == false)
+					{
+						board.changechar(s, posx + i*2, posy);
+					}
 				}
 				palex.erase(word);
 			}
@@ -730,10 +372,15 @@ void Cwords::removeword(string word) {
 			{
 				if (adjright(posx + word.size()*2, posy) == false && adjdown(posx + word.size() * 2, posy) == false && adjup(posx + word.size() * 2, posy) == false)
 				{
-					for (size_t i = 0; i <= word.size(); i++)
+					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy).at(posx + i*2) = '.';
+						temp = board.wup((int)posx + i * 2, (int)posy) + word[i] + board.wdown((int)posx + i * 2, (int)posy);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx + i * 2, posy);
+						}
 					}
+					board.changechar(s, posx + word.size() * 2, posy);
 					palex.erase(word);
 					return;
 				}
@@ -741,7 +388,11 @@ void Cwords::removeword(string word) {
 				{
 					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy).at(posx + i*2) = '.';
+						temp = board.wup((int)posx + i * 2, (int)posy) + word[i] + board.wdown((int)posx + i * 2, (int)posy);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx + i * 2, posy);
+						}
 					}
 					palex.erase(word);
 					return;
@@ -751,10 +402,15 @@ void Cwords::removeword(string word) {
 			{
 				if (adjleft(posx - 2, posy) == false && adjdown(posx - 2, posy) == false && adjup(posx - 2, posy) == false)
 				{
-					for (size_t i = 0; i <= word.size(); i++)
+					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy).at(posx + i * 2 - 2) = '.';
+						temp = board.wup((int)posx + i * 2, (int)posy) + word[i] + board.wdown((int)posx + i * 2, (int)posy);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx + i * 2, posy);
+						}
 					}
+					board.changechar(s, posx - 2, posy);
 					palex.erase(word);
 					return;
 				}
@@ -762,7 +418,11 @@ void Cwords::removeword(string word) {
 				{
 					for (size_t i = 0; i < word.size(); i++)
 					{
-						cword.at(posy).at(posx + i * 2) = '.';
+						temp = board.wup((int)posx + i * 2, (int)posy) + word[i] + board.wdown((int)posx + i * 2, (int)posy);
+						if (wordexists(temp) == false)
+						{
+							board.changechar(s, posx + i * 2, posy);
+						}
 					}
 					palex.erase(word);
 					return;
@@ -772,38 +432,22 @@ void Cwords::removeword(string word) {
 			{
 				if (adjleft(posx - 2, posy) == false && adjdown(posx - 2, posy) == false && adjup(posx - 2, posy) == false)
 				{
-					for (size_t i = 0; i <= word.size(); i++)
-					{
-						cword.at(posy).at(posx + i * 2 - 2) = '.';
-					}
-					if (adjright(posx + word.size() * 2, posy) == false && adjdown(posx + word.size() * 2, posy) == false && adjup(posx + word.size() * 2, posy) == false)
-					{
-						cword.at(posy).at(posx + word.size() * 2) = '.';
-						return;
-					}
-					else
-					{
-					}
-					palex.erase(word);
-					return;
+					board.changechar(s, posx - 2, posy);
 				}
-				else
+				if (adjright(posx + word.size() * 2, posy) == false && adjdown(posx + word.size() * 2, posy) == false && adjup(posx + word.size() * 2, posy) == false)
 				{
-					for (size_t i = 0; i < word.size(); i++)
-					{
-						cword.at(posy).at(posx + i * 2) = '.';
-					}
-					if (adjright(posx + word.size() * 2, posy) == false && adjdown(posx + word.size() * 2, posy) == false && adjup(posx + word.size() * 2, posy) == false)
-					{
-						cword.at(posy).at(posx + word.size() * 2) = '.';
-						return;
-					}
-					else
-					{
-					}
-					palex.erase(word);
-					return;
+					board.changechar(s, posx + word.size() * 2, posy);
 				}
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					temp = board.wup((int)posx + i * 2, (int)posy) + word[i] + board.wdown((int)posx + i * 2, (int)posy);
+					if (wordexists(temp) == false)
+					{
+						board.changechar(s, posx + i * 2, posy);
+					}
+				}
+				palex.erase(word);
+				return;
 			}
 			break;
 		}
@@ -815,5 +459,4 @@ void Cwords::removeword(string word) {
 	
 Cwords::~Cwords() {
 	palex.erase(palex.begin(), palex.end());
-	cword.erase(cword.begin(), cword.end());
 }
