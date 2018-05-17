@@ -57,10 +57,11 @@ int main() {
 				it++;
 				string a;
 				Dictionary words;
-				while (getline(my_dictionary, a))
+				words.insertwords(my_dictionary);
+				/*while (getline(my_dictionary, a))
 				{
 					words.insertword(a);
-				} // Eliminar futuramente
+				} */// Eliminar futuramente
 				int x = 0, y = 0;
 				cout << "What are the propotions?" << endl;
 				while (x == 0 || y == 0)
@@ -69,7 +70,8 @@ int main() {
 				}
 				Cwords puzzle(x, y);
 				string pos, word; 
-				cout << "Position (LCD / CTRL + Z = stop):" << endl;
+				puzzle.printboard();
+				cout << "Position (LCD / CTRL + Z = stop) ?";
 				cin >> pos;
 				while (!cin.eof())
 				{

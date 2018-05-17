@@ -11,8 +11,9 @@ class Dictionary
 {
 public:
 	Dictionary();
-	Dictionary(ifstream file);
-	void insertword(string line);
+	Dictionary(ifstream& file);
+	//void insertword(string line);
+	void insertwords(ifstream& file);
 	bool wordexists(string word);
 private:
 	map<string, vector<string>> wands;
