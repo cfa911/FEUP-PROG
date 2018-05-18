@@ -84,6 +84,7 @@ int main() {
 			else
 			{
 				it++;
+				changefilename(it, save_file_name);
 				string a;
 				Dictionary words;
 				words.insertwords(my_dictionary);
@@ -139,12 +140,17 @@ int main() {
 					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
 					cin >> pos;
 				}
-				
+				puzzle.finishboard();
+				puzzle.saveinfile(save_file_name);
 			}
 			cin.clear();
 			break;
 		}
 		case 2: {
+			string pz;
+			cin >> pz;
+			Cwords puzzle(pz);
+			puzzle.printboard();
 			break;
 		}
 		default:

@@ -52,5 +52,8 @@
     <Text Include="Words.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="b000.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

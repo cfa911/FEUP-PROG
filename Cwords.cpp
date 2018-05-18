@@ -26,40 +26,46 @@ Cwords::Cwords(int x, int y, string filename)
 	dictionary = filename;
 }
 
-Cwords::Cwords(ifstream file) {
-	string a, pos;
-	vector<string> b;
-	size_t j = 0, i = 0, npos;
-	while (getline(file, a))
+Cwords::Cwords(string filename) {
+	ifstream file;
+	file.open(filename);
+	if (!file.is_open())
 	{
-		if (a.size() == 0)
+		cout << "Could not open the file" << endl;
+		return;
+	}
+	else
+	{
+		vector<string> b;
+		string temp, pos;
+		size_t npos;
+		int i = 0;
+		while (getline(file, temp))
 		{
-			j++;
-		}
-		else if (j == 0)
-		{
-			dictionary = a;
-		}
-		else if (j == 1)
-		{
-			b.push_back(a);
-		}
-		else
-		{
-			if (i == 0)
+			if (temp.size() == 0)
 			{
-				Board brd(b);
-				board = brd;
 				i++;
 			}
-			else
+			else if (i == 0)
 			{
-				npos = a.find_first_of(" ");
-				pos = a.substr(0, npos);
-				a.erase(0, npos + 1);
-				palex.insert(std::pair<string, string>(a, pos));
+				dictionary = temp;
+			}
+			else if (i == 1)
+			{
+				b.push_back(temp);
+			}
+			else if (i == 2)
+			{
+				npos = temp.find_first_of(" ");
+				pos = temp.substr(0, npos);
+				temp.erase(0, npos + 1);
+				palex.insert(std::pair<string, string>(temp, pos));
 			}
 		}
+		int x = b.at(0).size() / 2, y = b.size();
+		board = Board(x, y);
+		board.replaceboard(b);
+		return;
 	}
 }
 
@@ -474,6 +480,10 @@ void Cwords::removeword(string xyo) {
 	}
 }
 
+void Cwords::finishboard() {
+	 this->board.fill();
+}
+
 void Cwords::saveinfile(string filename) {
 	ofstream my_file;
 	vector<string> a = board.vec();
@@ -485,14 +495,23 @@ void Cwords::saveinfile(string filename) {
 	}
 	else
 	{
-		board.fill();
+		string temp;
 		my_file << dictionary << endl;
 		my_file << endl;
-		for (size_t i = 0; i < a.size(); i++)
+		for (size_t i = 1; i < a.size(); i++)
 		{
-			my_file << a.at(i);
+			temp = a.at(i);
+			temp.erase(0, 1);
+			my_file << temp << endl;
 		}
 		my_file << endl;
+		map<string, string>::iterator it;
+		for (it = palex.begin(); it != palex.end(); it++)
+		{
+			temp = it->second + " " + it->first;
+			my_file << temp << endl;
+		}
+		return;
 	}
 }
 	

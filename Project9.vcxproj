@@ -129,6 +129,7 @@
     <ClInclude Include="Puzzle.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="b000.txt" />
     <Text Include="Words.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

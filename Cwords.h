@@ -13,7 +13,7 @@ class Cwords
 {
 public:
 	Cwords(int x,int y, string filename);
-	Cwords(ifstream file);
+	Cwords(string filename);
 	void printboard();
 	bool wordexists(string word);
 	bool wordfits(string word, int x, int y, char orientation);
@@ -23,6 +23,7 @@ public:
 	bool adjleft(int x, int y);
 	bool adjright(int x, int y);
 	void removeword(string word);
+	void finishboard();
 	void saveinfile(string filename);
 	~Cwords();
 

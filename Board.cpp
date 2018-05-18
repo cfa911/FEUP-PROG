@@ -66,10 +66,11 @@ Board::Board(int x, int y)
 	}
 	board = crossword;
 }
-Board::Board(vector<string> bfile) {
-	for (size_t i = 0; i < bfile.size(); i++)
+void Board::replaceboard(vector<string> bfile) {
+	for (size_t i = 1; i < board.size(); i++)
 	{
-		board.push_back(bfile.at(i));
+		board.at(i).erase(1, board.at(i).size() - 1);
+		board.at(i) = board.at(i) + bfile.at(i - 1);
 	}
 }
 

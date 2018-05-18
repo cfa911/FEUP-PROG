@@ -11,7 +11,7 @@ class Board
 public:
 	Board();
 	Board(int x, int y);
-	Board(vector<string> bfile);
+	void replaceboard(vector<string> bfile);
 	void printBoard();
 	void insertWBoard(string word, size_t posx, size_t posy, char ori);
 	void changechar(char s, size_t posx, size_t posy);
