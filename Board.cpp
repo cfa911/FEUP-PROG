@@ -1,5 +1,5 @@
 #include "Board.h"
-
+#include "Colors.h"
 
 Board::Board()
 {
@@ -75,10 +75,22 @@ void Board::replaceboard(vector<string> bfile) {
 }
 
 void Board::printBoard() {
-	for (size_t i = 0; i < board.size(); i++)
+	for (int i = 0; i < board.size(); i++)
 	{
-		cout << board.at(i) << endl;
+
+		for (int j = 0; j <= board.at(i).size(); j++)
+		{
+			if (i == 0 || j == 0)
+				setcolor(RED, BLACK);
+			else if (board[i][j] == '#')
+				setcolor(WHITE, BLACK);
+			else
+				setcolor(BLACK, WHITE);
+			cout << board[i][j];
+		}
+		cout << endl;
 	}
+	setcolor(WHITE, BLACK);
 	return;
 }
 

@@ -116,7 +116,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Colors.cpp" />
     <ClCompile Include="Cwords.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -126,6 +125,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Cwords.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="Colors.h" />
     <ClInclude Include="Puzzle.h" />
   </ItemGroup>
   <ItemGroup>
