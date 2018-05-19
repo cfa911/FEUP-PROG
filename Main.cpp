@@ -60,7 +60,7 @@ int main() {
 	cout << "1 - Create a new puzzle" << endl;
 	cout << "2 - Resume a puzzle" << endl;
 	cout << "0 - Exit" << endl;
-	cout << "-------------------------------------------------------------------------" << endl << endl;
+	cout << "-------------------------------------------------------------------------" << endl;
 	while (true)
 	{
 		cin >> op;
@@ -71,6 +71,7 @@ int main() {
 			break;
 		}
 		case 1: {
+			cout << "-------------------------------------------------------------------------" << endl;
 			string my_dictionary_name;
 			ifstream my_dictionary;
 			cout << "Dictionary file name ? " << endl;
@@ -97,7 +98,7 @@ int main() {
 				Cwords puzzle(x, y, my_dictionary_name);
 				string pos, word;
 				puzzle.printboard();
-				cout << "Position (LCD / CTRL + Z = stop ) ? ";
+				cout << "Position (LCD / CTRL + Z = stop ) ? "<<endl;
 				cin >> pos;
 				while (!cin.eof())
 				{
@@ -146,11 +147,72 @@ int main() {
 			cin.clear();
 			break;
 		}
-		case 2: {
-			string pz;
-			cin >> pz;
-			Cwords puzzle(pz);
-			puzzle.printboard();
+		case 2:{
+			string puzzlename;
+			cout << "-------------------------------------------------------------------------" << endl;
+			cout << "Name of the file where the puzzle is stored" << endl;
+			cin >> puzzlename;
+			Cwords puzzle(puzzlename);
+			string dictionary_name = puzzle.dictionaryname();
+			ifstream dictionary;
+			dictionary.open(dictionary_name);
+			if (!dictionary.is_open())
+			{
+				cout << "Could not open the file" << endl;
+			}
+			else
+			{
+				Dictionary words;
+				words.insertwords(dictionary);
+				string pos, word;
+				puzzle.printboard();
+				cout << "Position (LCD / CTRL + Z = stop ) ? " << endl;
+				cin >> pos;
+				while (!cin.eof())
+				{
+					if (pos.size() > 3 || (tolower(pos.at(0)) > 'z' || tolower(pos.at(0)) < 'a') || (toupper(pos.at(1)) > 'Z' || toupper(pos.at(1)) < 'A') || (toupper(pos.at(2)) != 'V' && toupper(pos.at(2)) != 'H'))
+					{
+						cout << "Incorrect format of the position" << endl;
+					}
+					else
+					{
+						pos.at(0) = tolower(pos.at(0));
+						pos.at(1) = toupper(pos.at(1));
+						pos.at(2) = toupper(pos.at(2));
+						cout << "Word (- = remove / ? = help) .. ? " << endl;
+						cin >> word;
+						for (size_t i = 0; i < word.size(); i++)
+						{
+							word.at(i) = toupper(word.at(i));
+						}
+						if (word == "-")
+						{
+							puzzle.removeword(pos);
+						}
+						else if (word == "?")
+						{
+
+						}
+						else
+						{
+							if (words.wordexists(word) == true)
+							{
+								puzzle.insertword(pos, word);
+							}
+							else
+							{
+								cout << "Word doesn't exist in the dictionary" << endl;
+							}
+						}
+					}
+					puzzle.printboard();
+					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
+					cin >> pos;
+				}
+				puzzle.finishboard();
+				puzzle.saveinfile(save_file_name);
+			}
+			cin.clear();
 			break;
 		}
 		default:

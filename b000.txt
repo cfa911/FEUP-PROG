@@ -5,8 +5,9 @@ Words.txt
  N # # # N #
  O # # # K #
  Y # # # # #
- # # # # # #
+ # O U T E R
 
 aAV ANNOY
 aAH ANNUL
 eAV LANK
+bFH OUTER

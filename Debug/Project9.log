@@ -1,7 +1,2 @@
-﻿  Board.cpp
-c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(15): warning C4018: '<': signed/unsigned mismatch
-c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(19): warning C4018: '<': signed/unsigned mismatch
-c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(43): warning C4018: '<': signed/unsigned mismatch
-c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(78): warning C4018: '<': signed/unsigned mismatch
-c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(81): warning C4018: '<=': signed/unsigned mismatch
-  Project9.vcxproj -> C:\Users\cfa91\OneDrive\Documentos\Github\ProjProg\Debug\Project9.exe
+﻿  Main.cpp
+  Project9.vcxproj -> C:\Users\MrHit\Documents\GitHub\ProjProg\Debug\Project9.exe

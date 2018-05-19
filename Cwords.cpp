@@ -37,6 +37,7 @@ Cwords::Cwords(string filename) {
 	else
 	{
 		vector<string> b;
+		map<string, string> wap;
 		string temp, pos;
 		size_t npos;
 		int i = 0;
@@ -59,12 +60,17 @@ Cwords::Cwords(string filename) {
 				npos = temp.find_first_of(" ");
 				pos = temp.substr(0, npos);
 				temp.erase(0, npos + 1);
-				palex.insert(std::pair<string, string>(temp, pos));
+				wap.insert(std::pair<string, string>(temp, pos));
 			}
 		}
 		int x = b.at(0).size() / 2, y = b.size();
 		board = Board(x, y);
-		board.replaceboard(b);
+		map<string, string>::iterator it;
+		for ( it = wap.begin(); it != wap.end(); it++)
+		{
+			insertword(it->second, it->first);
+		}
+		file.close();
 		return;
 	}
 }
@@ -511,8 +517,12 @@ void Cwords::saveinfile(string filename) {
 			temp = it->second + " " + it->first;
 			my_file << temp << endl;
 		}
+		my_file.close();
 		return;
 	}
+}
+string Cwords::dictionaryname() {
+	return dictionary;
 }
 	
 Cwords::~Cwords() {

@@ -25,6 +25,7 @@ public:
 	void removeword(string word);
 	void finishboard();
 	void saveinfile(string filename);
+	string dictionaryname();
 	~Cwords();
 
 private:
