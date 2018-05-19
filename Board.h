@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -24,6 +25,8 @@ public:
 	string wright(int x, int y);
 	bool spaceoccupied(string word, int x, int y, char orientation);
 	void fill();
+	map<string, string> newordsformed();
+
 	
 private:
 	vector<string> board;

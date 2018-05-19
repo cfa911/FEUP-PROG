@@ -1,13 +1,17 @@
 Words.txt
 
- A N N U L #
- N # # # A #
- N # # # N #
- O # # # K #
- Y # # # # #
- # O U T E R
+ A # # # # # # # # #
+ B A A # # # # # # #
+ A L L # # # # # # #
+ C I E # # # # # # #
+ K E R # # # # # # #
+ # N T # # # # # # #
+ # # # # # # # # # #
+ # # # # # # # # # #
+ # # # # # # # # # #
+ # # # # # # # # # #
 
-aAV ANNOY
-aAH ANNUL
-eAV LANK
-bFH OUTER
+aAV ABACK
+cBV ALERT
+bBV ALIEN
+aCH ALL

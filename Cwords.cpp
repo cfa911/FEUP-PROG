@@ -524,6 +524,29 @@ void Cwords::saveinfile(string filename) {
 string Cwords::dictionaryname() {
 	return dictionary;
 }
+map<string, string> Cwords::npossiblewords() {
+	map<string, string> w = board.newordsformed();
+	return w;
+}
+void Cwords::insertword2(string xyo, string word) {
+	
+	char a = xyo[0], A = xyo[1], o = toupper(xyo[2]);
+	int b = a - 'a', B = A - 'A';
+	
+	size_t posx = b * 2 + 2, posy = B + 1;
+	Board temp = this->board;
+	this->board.insertWBoard(word, posx, posy, o);
+	if (cmpboards(temp, board) == true)
+	{
+		return;
+	}
+	else
+	{
+		palex.insert(std::pair<string, string>(word, xyo));
+	}
+	
+	
+}
 	
 Cwords::~Cwords() {
 	palex.erase(palex.begin(), palex.end());

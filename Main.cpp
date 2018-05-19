@@ -60,9 +60,10 @@ int main() {
 	cout << "1 - Create a new puzzle" << endl;
 	cout << "2 - Resume a puzzle" << endl;
 	cout << "0 - Exit" << endl;
-	cout << "-------------------------------------------------------------------------" << endl;
 	while (true)
 	{
+		cout << "-------------------------------------------------------------------------" << endl;
+		cout << "Select an option" << endl;
 		cin >> op;
 		switch (op)
 		{
@@ -141,6 +142,16 @@ int main() {
 					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
 					cin >> pos;
 				}
+				map<string, string> temp = puzzle.npossiblewords();
+				map<string, string>::iterator t;
+				for ( t = temp.begin(); t != temp.end(); t++)
+				{
+					if (words.wordexists(t->first) == true)
+					{
+						puzzle.insertword2(t->second, t->first);
+					}
+				}
+				puzzle.printboard();
 				puzzle.finishboard();
 				puzzle.saveinfile(save_file_name);
 			}

@@ -256,7 +256,7 @@ void invertstring(string &word) {
 string Board::wup(int x, int y) {
 	string a;
 	size_t i = y - 1;
-	while (i >= 1 && board.at(i).at(x) != '#')
+	while (i >= 1 && board.at(i).at(x) != '#' && board.at(i).at(x) != '.')
 	{
 		a = a + board.at(i).at(x);
 		i--;
@@ -268,7 +268,7 @@ string Board::wup(int x, int y) {
 string Board::wdown(int x, int y) {
 	string a;
 	size_t i = y + 1;
-	while (i <= board.size() - 1 && board.at(i).at(x) != '#')
+	while (i <= board.size() - 1 && board.at(i).at(x) != '#' && board.at(i).at(x) != '.')
 	{
 		a = a + board.at(i).at(x);
 		i++;
@@ -279,7 +279,7 @@ string Board::wdown(int x, int y) {
 string Board::wleft(int x, int y) {
 	string a;
 	size_t i = x - 2;
-	while (i >= 2 && board.at(y).at(i) != '#')
+	while (i >= 2 && board.at(y).at(i) != '#' && board.at(y).at(i) != '.')
 	{
 		a = a + board.at(y).at(i);
 		i = i - 2;
@@ -291,7 +291,7 @@ string Board::wleft(int x, int y) {
 string Board::wright(int x, int y) {
 	string a;
 	size_t i = x + 2;
-	while (i <= board.at(0).size() - 1 && board.at(y).at(i) != '#')
+	while (i <= board.at(0).size() - 1 && board.at(y).at(i) != '#'  && board.at(y).at(i) != '.')
 	{
 		a = a + board.at(y).at(i);
 		i = i + 2;
@@ -380,3 +380,45 @@ void Board::fill() {
 		}
 	}
 }
+map <string, string> Board::newordsformed() {
+	string xyV = "aAV", xyH = "aAH", wordx, wordy;
+	map <string, string> nw;
+	size_t k = 0;
+	for (size_t i = 1; i < board.size(); i++)
+	{
+		for (size_t j = 2; j < board.at(i).size(); j = j+ 2)
+		{
+			if (board.at(i).at(j) == '#' || board.at(i).at(j) == '.')
+			{
+				continue;
+			}
+			else
+			{
+				wordx = wleft(j, i) + board.at(i).at(j) + wright(j, i);
+				wordy = wup(j, i) + board.at(i).at(j) + wdown(j, i);
+				if (wordx.size() > 1)
+				{
+					if (nw.find(wordx) == nw.end())
+					{
+						nw.insert(std::pair<string, string>(wordx, xyH));
+					}
+				}
+				if (wordy.size() > 1)
+				{
+					if (nw.find(wordy) == nw.end())
+					{
+						nw.insert(std::pair<string, string>(wordy, xyV));
+					}
+				}
+			}
+			xyV[0] = xyV[0] + 1;
+			xyH[0] = xyH[0] + 1;
+		}
+		xyV[0] = 'a';
+		xyH[0] = 'a';
+		xyV[1] = xyV[1] + 1;
+		xyH[1] = xyH[1] + 1;
+	}
+	return nw;
+}
+
