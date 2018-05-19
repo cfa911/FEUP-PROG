@@ -122,9 +122,14 @@ int main() {
 						{
 							puzzle.removeword(pos);
 						}
-						else if (word == "?")
+						 if (word == "?")
 						{
-
+							string a = puzzle.spacetofill(pos);
+							vector<string> wordhelp = words.help(a);
+							for (size_t i = 0; i < wordhelp.size(); i++)
+							{
+								cout << wordhelp[i] << endl;;
+							}
 						}
 						else
 						{
@@ -152,7 +157,6 @@ int main() {
 					}
 				}
 				puzzle.printboard();
-				puzzle.finishboard();
 				puzzle.saveinfile(save_file_name);
 			}
 			cin.clear();
@@ -220,7 +224,6 @@ int main() {
 					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
 					cin >> pos;
 				}
-				puzzle.finishboard();
 				puzzle.saveinfile(save_file_name);
 			}
 			cin.clear();

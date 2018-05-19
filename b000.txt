@@ -1,17 +1,17 @@
 Words.txt
 
- A # # # # # # # # #
- B A A # # # # # # #
- A L L # # # # # # #
- C I E # # # # # # #
- K E R # # # # # # #
- # N T # # # # # # #
- # # # # # # # # # #
- # # # # # # # # # #
- # # # # # # # # # #
- # # # # # # # # # #
+ A B A C K # . . . .
+ # A L I E N # . . .
+ # A L E R T # . . .
+ . . # . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
 
-aAV ABACK
-cBV ALERT
-bBV ALIEN
-aCH ALL
+aAH ABACK
+bCH ALERT
+bBH ALIEN
+cAV ALL

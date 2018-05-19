@@ -532,10 +532,9 @@ void Cwords::insertword2(string xyo, string word) {
 	
 	char a = xyo[0], A = xyo[1], o = toupper(xyo[2]);
 	int b = a - 'a', B = A - 'A';
-	
 	size_t posx = b * 2 + 2, posy = B + 1;
 	Board temp = this->board;
-	this->board.insertWBoard(word, posx, posy, o);
+	this->board.insertWBoard2(word, posx, posy, o);
 	if (cmpboards(temp, board) == true)
 	{
 		return;
@@ -544,8 +543,40 @@ void Cwords::insertword2(string xyo, string word) {
 	{
 		palex.insert(std::pair<string, string>(word, xyo));
 	}
-	
-	
+}
+
+string Cwords::spacetofill(string xyo) {
+	size_t x = xyo[0] - 'a', y = xyo[1] - 'A';
+	size_t posx = x * 2 + 2, posy = y + 1;
+	char ori = xyo[2];
+	string a;
+	switch (ori)
+	{
+	case 'V': {
+		a = board.wdown2((int)posx, (int)posy);
+		for (size_t i = 0; i < a.size(); i++)
+		{
+			if (a.at(i) == '.')
+			{
+				a.at(i) = '?';
+			}
+		}
+		return a;
+		break;
+	}
+	case 'H': {
+		a = board.wright2((int)posx, (int)posy);
+		for (size_t i = 0; i < a.size(); i++)
+		{
+			if (a.at(i) == '.')
+			{
+				a.at(i) = '?';
+			}
+		}
+		return a;
+		break;
+		}
+	}
 }
 	
 Cwords::~Cwords() {

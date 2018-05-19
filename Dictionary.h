@@ -14,6 +14,7 @@ public:
 	Dictionary(ifstream& file);
 	void insertwords(ifstream& file);
 	bool wordexists(string word);
+	vector<string> help(string place);
 private:
 	map<string, vector<string>> wands;
 };

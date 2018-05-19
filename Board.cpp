@@ -223,12 +223,133 @@ void Board::insertWBoard(string word, size_t posx, size_t posy, char ori) {
 	}
 	return;
 }
+void Board::insertWBoard2(string word, size_t posx, size_t posy, char ori) {
+	size_t linex = (board.at(0).size() - 1) / 2;
+	switch (ori)
+	{
+	case 'V': {
+		if (word.size() == board.size() - 1)
+		{
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				board.at(posy + i).at(posx) = word.at(i);
+			}
+		}
+		else if (posy == 1)
+		{
+			if (board.at(posy + word.size()).at(posx) != '.' && board.at(posy + word.size()).at(posx) != '#')
+			{
+				return;
+			}
+			else
+			{
+				board.at(posy + word.size()).at(posx) = '#';
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					board.at(posy + i).at(posx) = word.at(i);
+				}
+			}
+
+		}
+		else if (board.size() - posy == word.size())
+		{
+			if (board.at(posy - 1).at(posx) != '.' && board.at(posy - 1).at(posx) != '#')
+			{
+				return;
+			}
+			else
+			{
+				board.at(posy - 1).at(posx) = '#';
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					board.at(posy + i).at(posx) = word.at(i);
+				}
+			}
+		}
+		else
+		{
+			if ((board.at(posy - 1).at(posx) != '.' && board.at(posy - 1).at(posx) != '#') || (board.at(posy + word.size()).at(posx) != '.' && board.at(posy + word.size()).at(posx) != '#'))
+			{
+				return;
+			}
+			else
+			{
+				board.at(posy - 1).at(posx) = '#';
+				board.at(posy + word.size()).at(posx) = '#';
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					board.at(posy + i).at(posx) = word.at(i);
+				}
+			}
+		}
+		break;
+	}
+	case 'H': {
+		size_t b = (posx - 2) / 2;
+		if (linex == word.size())
+		{
+			for (size_t i = 0; i < word.size(); i++)
+			{
+				board.at(posy).at(posx + i * 2) = word.at(i);
+			}
+		}
+		else if (posx == 2)
+		{
+			if ((board.at(posy).at(posx + word.size() * 2) != '.') && (board.at(posy).at(posx + word.size() * 2) != '#'))
+			{
+				return;
+			}
+			else
+			{
+				board.at(posy).at(posx + word.size() * 2) = '#';
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					board.at(posy).at(posx + i * 2) = word.at(i);
+				}
+
+			}
+		}
+		else if (linex - b == word.size())
+		{
+			if ((board.at(posy).at(posx - 1 * 2) != '.') && (board.at(posy).at(posx - 1 * 2) != '#'))
+			{
+				return;
+			}
+			else
+			{
+				board.at(posy).at(posx - 1 * 2) = '#';
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					board.at(posy).at(posx + i * 2) = word.at(i);
+				}
+			}
+		}
+		else
+		{
+			if (((board.at(posy).at(posx - 1 * 2) != '.') && (board.at(posy).at(posx - 1 * 2) != '#')) || ((board.at(posy).at(posx + word.size() * 2) != '.') && (board.at(posy).at(posx + word.size() * 2) != '#')))
+			{
+				return;
+			}
+			else
+			{
+				board.at(posy).at(posx + word.size() * 2) = '#';
+				board.at(posy).at(posx - 1 * 2) = '#';
+				for (size_t i = 0; i < word.size(); i++)
+				{
+					board.at(posy).at(posx + i * 2) = word.at(i);
+				}
+			}
+		}
+	}
+	default:
+		break;
+	}
+	return;
+}
 
 void Board::changechar(char s, size_t posx, size_t posy) {
 	board.at(posy).at(posx) = s;
 }
-
-
 
 vector<string> Board::vec() {
 	vector<string> temp = board;
@@ -421,4 +542,27 @@ map <string, string> Board::newordsformed() {
 	}
 	return nw;
 }
+char Board::firstchar(size_t posx, size_t posy) {
+	return board.at(posy).at(posx);
+}
 
+string Board::wdown2(int x, int y) {
+	string a;
+	size_t i = y;
+	while (i <= board.size() - 1 && board.at(i).at(x) != '#')
+	{
+		a = a + board.at(i).at(x);
+		i++;
+	}
+	return a;
+}
+string Board::wright2(int x, int y) {
+	string a;
+	size_t i = x;
+	while (i <= board.at(0).size() - 1 && board.at(y).at(i) != '#')
+	{
+		a = a + board.at(y).at(i);
+		i = i + 2;
+	}
+	return a;
+}
