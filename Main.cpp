@@ -55,6 +55,7 @@ int main() {
 	cout << "Word (- = remove / ? = help):" << endl;
 	cout << "- -> Removes a word from the puzzle" << endl;
 	cout << "? -> Shows all possible words that can be placed" << endl;
+	cout << "+ -> Checks if a word was created in the position given" << endl;
 	cout << "-------------------------------------------------------------------------" << endl << endl;
 	cout << "OPTIONS: " << endl;
 	cout << "1 - Create a new puzzle" << endl;
@@ -68,7 +69,6 @@ int main() {
 		switch (op)
 		{
 		case 0: {
-
 			break;
 		}
 		case 1: {
@@ -103,7 +103,7 @@ int main() {
 				cin >> pos;
 				while (!cin.eof())
 				{
-					if (pos.size() > 3 || (tolower(pos.at(0)) > 'z' || tolower(pos.at(0)) < 'a') || (toupper(pos.at(1)) > 'Z' || toupper(pos.at(1)) < 'A') || (toupper(pos.at(2)) != 'V' && toupper(pos.at(2)) != 'H'))
+					if (pos.size() != 3 || (tolower(pos.at(0)) > 'z' || tolower(pos.at(0)) < 'a') || (toupper(pos.at(1)) > 'Z' || toupper(pos.at(1)) < 'A') || (toupper(pos.at(2)) != 'V' && toupper(pos.at(2)) != 'H'))
 					{
 						cout << "Incorrect format of the position" << endl;
 					}
@@ -112,7 +112,7 @@ int main() {
 						pos.at(0) = tolower(pos.at(0));
 						pos.at(1) = toupper(pos.at(1));
 						pos.at(2) = toupper(pos.at(2));
-						cout << "Word (- = remove / ? = help) .. ? " << endl;
+						cout << "Word (- = remove / ? = help / + = check) .. ? " << endl;
 						cin >> word;
 						for (size_t i = 0; i < word.size(); i++)
 						{
@@ -131,6 +131,18 @@ int main() {
 								cout << wordhelp[i] << endl;;
 							}
 						}
+						 if (word == "+")
+						 {
+							 string b = puzzle.possibleword(pos);
+							 if (words.wordexists(b) == true)
+							 {
+								 puzzle.insertword(pos, b);
+							 }
+							 else
+							 {
+								 cout << "Word doesn't exist in the dictionary" << endl;
+							 }
+						 }
 						else
 						{
 							if (words.wordexists(word) == true)
@@ -147,15 +159,7 @@ int main() {
 					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
 					cin >> pos;
 				}
-				map<string, string> temp = puzzle.npossiblewords();
-				map<string, string>::iterator t;
-				for ( t = temp.begin(); t != temp.end(); t++)
-				{
-					if (words.wordexists(t->first) == true)
-					{
-						puzzle.insertword2(t->second, t->first);
-					}
-				}
+				
 				puzzle.printboard();
 				puzzle.saveinfile(save_file_name);
 			}
@@ -194,7 +198,7 @@ int main() {
 						pos.at(0) = tolower(pos.at(0));
 						pos.at(1) = toupper(pos.at(1));
 						pos.at(2) = toupper(pos.at(2));
-						cout << "Word (- = remove / ? = help) .. ? " << endl;
+						cout << "Word (- = remove / ? = help / + = check) .. ? " << endl;
 						cin >> word;
 						for (size_t i = 0; i < word.size(); i++)
 						{
@@ -206,7 +210,24 @@ int main() {
 						}
 						else if (word == "?")
 						{
-
+							string a = puzzle.spacetofill(pos);
+							vector<string> wordhelp = words.help(a);
+							for (size_t i = 0; i < wordhelp.size(); i++)
+							{
+								cout << wordhelp[i] << endl;;
+							}
+						}
+						if (word == "+")
+						{
+							string b = puzzle.possibleword(pos);
+							if (words.wordexists(b) == true)
+							{
+								puzzle.insertword(pos, b);
+							}
+							else
+							{
+								cout << "Word doesn't exist in the dictionary" << endl;
+							}
 						}
 						else
 						{

@@ -10,7 +10,7 @@ class Puzzle
 {
 public:
 	Puzzle();
-	Puzzle(ifstream file);
+	Puzzle(string file);
 private:
 	Cwords solution;
 	Cwords player;

@@ -26,9 +26,8 @@ public:
 	void finishboard();
 	void saveinfile(string filename);
 	string dictionaryname();
-	map<string, string> npossiblewords();
-	void insertword2(string xyo, string word);
 	string spacetofill(string xyo);
+	string possibleword(string xyo);
 	~Cwords();
 
 private:

@@ -501,50 +501,7 @@ void Board::fill() {
 		}
 	}
 }
-map <string, string> Board::newordsformed() {
-	string xyV = "aAV", xyH = "aAH", wordx, wordy;
-	map <string, string> nw;
-	size_t k = 0;
-	for (size_t i = 1; i < board.size(); i++)
-	{
-		for (size_t j = 2; j < board.at(i).size(); j = j+ 2)
-		{
-			if (board.at(i).at(j) == '#' || board.at(i).at(j) == '.')
-			{
-				continue;
-			}
-			else
-			{
-				wordx = wleft(j, i) + board.at(i).at(j) + wright(j, i);
-				wordy = wup(j, i) + board.at(i).at(j) + wdown(j, i);
-				if (wordx.size() > 1)
-				{
-					if (nw.find(wordx) == nw.end())
-					{
-						nw.insert(std::pair<string, string>(wordx, xyH));
-					}
-				}
-				if (wordy.size() > 1)
-				{
-					if (nw.find(wordy) == nw.end())
-					{
-						nw.insert(std::pair<string, string>(wordy, xyV));
-					}
-				}
-			}
-			xyV[0] = xyV[0] + 1;
-			xyH[0] = xyH[0] + 1;
-		}
-		xyV[0] = 'a';
-		xyH[0] = 'a';
-		xyV[1] = xyV[1] + 1;
-		xyH[1] = xyH[1] + 1;
-	}
-	return nw;
-}
-char Board::firstchar(size_t posx, size_t posy) {
-	return board.at(posy).at(posx);
-}
+
 
 string Board::wdown2(int x, int y) {
 	string a;
@@ -560,6 +517,27 @@ string Board::wright2(int x, int y) {
 	string a;
 	size_t i = x;
 	while (i <= board.at(0).size() - 1 && board.at(y).at(i) != '#')
+	{
+		a = a + board.at(y).at(i);
+		i = i + 2;
+	}
+	return a;
+}
+
+string Board::wdown3(int x, int y) {
+	string a;
+	size_t i = y;
+	while (i <= board.size() - 1 && board.at(i).at(x) != '#' && board.at(i).at(x) != '.')
+	{
+		a = a + board.at(i).at(x);
+		i++;
+	}
+	return a;
+}
+string Board::wright3(int x, int y) {
+	string a;
+	size_t i = x;
+	while (i <= board.at(0).size() - 1 && board.at(y).at(i) != '#' && board.at(y).at(i) != '.')
 	{
 		a = a + board.at(y).at(i);
 		i = i + 2;

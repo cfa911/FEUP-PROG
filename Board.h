@@ -26,10 +26,10 @@ public:
 	string wright(int x, int y);
 	string wdown2(int x, int y);
 	string wright2(int x, int y);
+	string wdown3(int x, int y);
+	string wright3(int x, int y);
 	bool spaceoccupied(string word, int x, int y, char orientation);
 	void fill();
-	map<string, string> newordsformed();
-	char firstchar(size_t posx, size_t posy);
 
 	
 private:

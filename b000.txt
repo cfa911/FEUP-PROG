@@ -1,4 +1,4 @@
-Words.txt
+words.txt
 
  A B A C K # . . . .
  # A L I E N # . . .

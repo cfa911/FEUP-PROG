@@ -1,5 +1,2 @@
-﻿  Dictionary.cpp
-  Cwords.cpp
-  Gerando Código...
-c:\users\mrhit\documents\github\projprog\cwords.cpp(580): warning C4715: 'Cwords::spacetofill': nem todos os caminhos de controle retornam um valor
+﻿  Main.cpp
   Project9.vcxproj -> C:\Users\MrHit\Documents\GitHub\ProjProg\Debug\Project9.exe
