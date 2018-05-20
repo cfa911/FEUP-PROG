@@ -75,6 +75,10 @@ Cwords::Cwords(string filename) {
 	}
 }
 
+Cwords::Cwords()
+{
+}
+
 void Cwords::printboard() {
 	board.printBoard();
 }
@@ -583,8 +587,22 @@ string Cwords::possibleword(string xyo) {
 }
 
 bool Cwords::cwordsisfull() {
+	vector<string> b_aux = getBoard().getVector();
+	for (int i = 0; i < b_aux.size(); i++)
+	{
 
+		for (int j = 0; j <= b_aux.at(i).size(); j++)
+		{
+			if (b_aux.at(i).at(j) == '.')
+				return false;
+		}
+	}
+	return true;
+}
 
+Board Cwords::getBoard()
+{
+	return board;
 }
 	
 Cwords::~Cwords() {

@@ -380,6 +380,11 @@ void Board::fill() {
 	}
 }
 
+vector<string> Board::getVector()
+{
+	return board;
+}
+
 
 string Board::wdown2(int x, int y) {
 	string a;

@@ -29,6 +29,7 @@ public:
 	string wright3(int x, int y);// second variation of right
 	bool spaceoccupied(string word, int x, int y, char orientation);//Check if the space where we want to place a word is not ocuppied
 	void fill();//fill empty spaces with a #
+	vector<string> getVector();
 
 	
 private:

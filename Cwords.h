@@ -14,6 +14,7 @@ class Cwords
 public:
 	Cwords(int x,int y, string filename);//Creates a new Crosswords
 	Cwords(string filename);//Creates a new Crosswords from a file
+	Cwords();
 	void printboard();//Prints the Crossword
 	bool wordexists(string word);//Checks if a word already exists in the Crossword
 	bool wordfits(string word, int x, int y, char orientation);// Checks if a word we want to place fits in the board
@@ -29,6 +30,7 @@ public:
 	string spacetofill(string xyo);//returns a string of the space we want to place a word
 	string possibleword(string xyo);//returns a word to check if it exists in the dictionary and if it can be inserted in the Crossword
 	bool cwordsisfull();
+	Board getBoard();
 	~Cwords();//Destructor
 
 private:
