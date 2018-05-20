@@ -581,6 +581,11 @@ string Cwords::possibleword(string xyo) {
 		break;
 	}
 }
+
+bool Cwords::cwordsisfull() {
+
+
+}
 	
 Cwords::~Cwords() {
 	palex.erase(palex.begin(), palex.end());
