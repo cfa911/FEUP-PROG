@@ -1,0 +1,10 @@
+﻿  P2.cpp
+c:\users\cfa91\onedrive\documentos\github\projprog\p2\p2\p2.cpp(154): error C2065: 'time': undeclared identifier
+  Cwords.cpp
+c:\users\cfa91\onedrive\documentos\github\projprog\p2\p2\cwords.cpp(661): warning C4018: '<': signed/unsigned mismatch
+c:\users\cfa91\onedrive\documentos\github\projprog\p2\p2\cwords.cpp(664): warning C4018: '<=': signed/unsigned mismatch
+  Generating Code...
+c:\users\cfa91\onedrive\documentos\github\projprog\p2\p2\cwords.cpp(635): warning C4715: 'Cwords::spacetofill': not all control paths return a value
+c:\users\cfa91\onedrive\documentos\github\projprog\p2\p2\cwords.cpp(657): warning C4715: 'Cwords::possibleword': not all control paths return a value
+  Skipping... (no relevant changes detected)
+  Puzzle.cpp

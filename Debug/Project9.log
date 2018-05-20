@@ -1,16 +1,7 @@
-﻿  Cwords.cpp
-c:\users\cfa91\onedrive\documentos\github\projprog\cwords.cpp(591): warning C4018: '<': signed/unsigned mismatch
-c:\users\cfa91\onedrive\documentos\github\projprog\cwords.cpp(594): warning C4018: '<=': signed/unsigned mismatch
-  Board.cpp
+﻿  Board.cpp
 c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(15): warning C4018: '<': signed/unsigned mismatch
 c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(19): warning C4018: '<': signed/unsigned mismatch
 c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(43): warning C4018: '<': signed/unsigned mismatch
 c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(78): warning C4018: '<': signed/unsigned mismatch
 c:\users\cfa91\onedrive\documentos\github\projprog\board.cpp(81): warning C4018: '<=': signed/unsigned mismatch
-  Generating Code...
-c:\users\cfa91\onedrive\documentos\github\projprog\cwords.cpp(565): warning C4715: 'Cwords::spacetofill': not all control paths return a value
-c:\users\cfa91\onedrive\documentos\github\projprog\cwords.cpp(587): warning C4715: 'Cwords::possibleword': not all control paths return a value
-  Skipping... (no relevant changes detected)
-  Puzzle.cpp
-  Main.cpp
   Project9.vcxproj -> C:\Users\cfa91\OneDrive\Documentos\Github\ProjProg\Debug\Project9.exe

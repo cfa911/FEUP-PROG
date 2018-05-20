@@ -1,0 +1,17 @@
+words.txt
+
+ A B A C K # . . . .
+ # A L I E N # . . .
+ # A L E R T # . . .
+ . . # . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+ . . . . . . . . . .
+
+aAH ABACK
+bCH ALERT
+bBH ALIEN
+cAV ALL
