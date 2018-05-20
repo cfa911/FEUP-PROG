@@ -12,9 +12,8 @@ using namespace std;
 class Cwords
 {
 public:
-	Cwords(int x,int y, string filename);
-	Cwords(string filename, string player);
-//Creates a new Crosswords
+	Cwords(int x,int y, string filename);//Creates a new Crosswords
+	Cwords(string filename, string player);//Creates a empty Crosswords with same dimensions as puzzle
 	Cwords(string filename);//Creates a new Crosswords from a file
 	Cwords();
 	void printboard();//Prints the Crossword
@@ -26,9 +25,8 @@ public:
 	bool adjleft(int x, int y);//Checks if the is a word adjecent to the left
 	bool adjright(int x, int y);//Checks if the is a word adjecent to the right
 	void removeword(string word);//Removes word from the Crossword
-	void finishboard();
-	void saveinfile(string filename, string player);
-	// Fills the remaining spaces of the board
+	void finishboard();// Fills the remaining spaces of the board
+	void saveinfile(string filename, long timer);
 	void saveinfile(string filename);//Saves the Crossword in a file
 	string dictionaryname();//Return the name of the dictionary used
 	string spacetofill(string xyo);//returns a string of the space we want to place a word

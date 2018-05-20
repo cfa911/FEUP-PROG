@@ -531,7 +531,7 @@ void Cwords::finishboard() {
 	 this->board.fill();
 }
 
-void Cwords::saveinfile(string filename,string time) {
+void Cwords::saveinfile(string filename,long time) {
 	ofstream my_file;
 	vector<string> a = board.vec();
 	my_file.open(filename);

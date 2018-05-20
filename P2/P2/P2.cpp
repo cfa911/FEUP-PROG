@@ -7,6 +7,7 @@
 #include <vector>
 #include "Cwords.h"
 #include "Dictionary.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -46,22 +47,20 @@ int main() {
 	bool loop = true;
 	string my_file_name, line;
 	ifstream my_file;
-	cout << "CROSSWORD PUZZLE CREATOR" << endl;
+	cout << "CROSSWORD PUZZLE PLAYER" << endl;
 	cout << "=================================================================" << endl << endl;
 	cout << "INSTRUCTIONS:" << endl;
 	cout << "Position (LCD / CTRL + Z = stop):" << endl;
 	cout << "LCD -> Line, column and direction (ex.: aAH)" << endl;
-	cout << "CTRL + Z -> Finish the puzzle creation" << endl << endl;
+	cout << "CTRL + Z -> Give up and start another puzzle" << endl << endl;
 	cout << "Word (- = remove / ? = help):" << endl;
-	cout << "- -> Removes a word from the puzzle" << endl;
-	cout << "? -> Shows all possible words that can be placed" << endl;
-	cout << "+ -> Checks if a word was created in the position given" << endl;
+	cout << "- -> Removes a word from the board" << endl;
+	cout << "? -> Shows synonims of the word in the given position" << endl;
 	cout << "-------------------------------------------------------------------------" << endl << endl;
 	cout << "OPTIONS: " << endl;
-	cout << "1 - Create a new puzzle" << endl;
-	cout << "2 - Resume a puzzle" << endl;
+	cout << "1 - Play a puzzle!!" << endl;
 	cout << "0 - Exit" << endl;
-	while (true)
+	while (loop)
 	{
 		cout << "-------------------------------------------------------------------------" << endl;
 		cout << "Select an option" << endl;
@@ -69,9 +68,11 @@ int main() {
 		switch (op)
 		{
 		case 0: {
+			loop = false;
 			break;
 		}
 		case 1: {
+			Timer time;
 			string puzzlename;
 			cout << "-------------------------------------------------------------------------" << endl;
 			cout << "Name of the file where the puzzle is stored" << endl;
@@ -93,7 +94,7 @@ int main() {
 				puzzle.printboard();
 				cout << "Position (LCD / CTRL + Z = stop ) ? " << endl;
 				cin >> pos;
-				while (!cin.eof())
+				while ((puzzle.getBoard().getVector() != puzzlefinal.getBoard().getVector())&&(!cin.eof()))
 				{
 					if (pos.size() > 3 || (tolower(pos.at(0)) > 'z' || tolower(pos.at(0)) < 'a') || (toupper(pos.at(1)) > 'Z' || toupper(pos.at(1)) < 'A') || (toupper(pos.at(2)) != 'V' && toupper(pos.at(2)) != 'H'))
 					{
@@ -104,7 +105,7 @@ int main() {
 						pos.at(0) = tolower(pos.at(0));
 						pos.at(1) = toupper(pos.at(1));
 						pos.at(2) = toupper(pos.at(2));
-						cout << "Word (- = remove / ? = help / + = check) .. ? " << endl;
+						cout << "Word (- = remove / ? = help) .. ? " << endl;
 						cin >> word;
 						for (size_t i = 0; i < word.size(); i++)
 						{
@@ -116,24 +117,15 @@ int main() {
 						}
 						else if (word == "?")
 						{
+
+							/*
 							string a = puzzle.spacetofill(pos);
 							vector<string> wordhelp = words.help(a);
 							for (size_t i = 0; i < wordhelp.size(); i++)
 							{
 								cout << wordhelp[i] << endl;;
 							}
-						}
-						if (word == "+")
-						{
-							string b = puzzle.possibleword(pos);
-							if (words.wordexists(b) == true)
-							{
-								puzzle.insertword(pos, b);
-							}
-							else
-							{
-								cout << "Word doesn't exist in the dictionary" << endl;
-							}
+							*/
 						}
 						else
 						{
@@ -151,7 +143,11 @@ int main() {
 					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
 					cin >> pos;
 				}
-				puzzle.saveinfile(save_file_name,time);
+				if (puzzle.getBoard().getVector() == puzzlefinal.getBoard().getVector()) {
+					puzzle.saveinfile(save_file_name,time.clock());
+					cout << "Congratulations!! You finished the board in: " << time.clock() << "seconds!!";
+				}
+
 			}
 			cin.clear();
 			break;

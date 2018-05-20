@@ -120,6 +120,7 @@
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="P2.cpp" />
     <ClCompile Include="Puzzle.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="b000.txt" />
@@ -130,6 +131,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Cwords.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Puzzle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
