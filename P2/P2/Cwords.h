@@ -26,7 +26,7 @@ public:
 	bool adjright(int x, int y);//Checks if the is a word adjecent to the right
 	void removeword(string word);//Removes word from the Crossword
 	void finishboard();// Fills the remaining spaces of the board
-	void saveinfile(string filename, long timer);
+	void saveinfile(string filename, string player);
 	void saveinfile(string filename);//Saves the Crossword in a file
 	string dictionaryname();//Return the name of the dictionary used
 	string spacetofill(string xyo);//returns a string of the space we want to place a word
@@ -34,6 +34,7 @@ public:
 	bool cwordsisfull();
 	Board getBoard();
 	~Cwords();//Destructor
+	map<string, string> getWordsPos();
 
 private:
 	string dictionary;//Name of the dictionary used

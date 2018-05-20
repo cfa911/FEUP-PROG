@@ -269,3 +269,8 @@ vector<string> Dictionary::help(string place) {
 	return words;
 }
 
+map<string, vector<string>> Dictionary::getMap()
+{
+	return wands;
+}
+

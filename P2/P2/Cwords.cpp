@@ -531,7 +531,8 @@ void Cwords::finishboard() {
 	 this->board.fill();
 }
 
-void Cwords::saveinfile(string filename,long time) {
+void Cwords::saveinfile(string filename, string player)
+{
 	ofstream my_file;
 	vector<string> a = board.vec();
 	my_file.open(filename);
@@ -542,23 +543,7 @@ void Cwords::saveinfile(string filename,long time) {
 	}
 	else
 	{
-		string temp;
-		my_file << dictionary << endl;
-		my_file << endl;
-		for (size_t i = 1; i < a.size(); i++)
-		{
-			temp = a.at(i);
-			temp.erase(0, 1);
-			my_file << temp << endl;
-		}
-		my_file << endl;
-		map<string, string>::iterator it;
-		for (it = palex.begin(); it != palex.end(); it++)
-		{
-			temp = it->second + " " + it->first;
-			my_file << temp << endl;
-		}
-		my_file << endl << time << endl;
+		my_file << endl << player << endl;
 		my_file.close();
 		return;
 	}
@@ -677,4 +662,9 @@ Board Cwords::getBoard()
 	
 Cwords::~Cwords() {
 	palex.erase(palex.begin(), palex.end());
+}
+
+map<string, string> Cwords::getWordsPos()
+{
+	return palex;
 }

@@ -15,6 +15,7 @@ public:
 	void insertwords(ifstream& file);
 	bool wordexists(string word);
 	vector<string> help(string place);
+	map<string, vector<string>> getMap();
 private:
 	map<string, vector<string>> wands;
 };

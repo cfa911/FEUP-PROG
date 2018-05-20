@@ -72,13 +72,20 @@ int main() {
 			break;
 		}
 		case 1: {
+			srand(time(NULL));
 			Timer time;
+			int n = 0;
 			string puzzlename;
+			string player;
 			cout << "-------------------------------------------------------------------------" << endl;
+			cout << "Please enter your name: ";
+			cin.clear();
+			cin.ignore();
+			getline(cin,player);
 			cout << "Name of the file where the puzzle is stored" << endl;
 			cin >> puzzlename;
 			Cwords puzzlefinal(puzzlename);
-			Cwords puzzle(puzzlename,"player");
+			Cwords puzzle(puzzlename,player);
 			string dictionary_name = puzzlefinal.dictionaryname();
 			ifstream dictionary;
 			dictionary.open(dictionary_name);
@@ -92,10 +99,10 @@ int main() {
 				words.insertwords(dictionary);
 				string pos, word;
 				puzzle.printboard();
-				cout << "Position (LCD / CTRL + Z = stop ) ? " << endl;
-				cin >> pos;
-				while ((puzzle.getBoard().getVector() != puzzlefinal.getBoard().getVector())&&(!cin.eof()))
+				do
 				{
+					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
+					cin >> pos;
 					if (pos.size() > 3 || (tolower(pos.at(0)) > 'z' || tolower(pos.at(0)) < 'a') || (toupper(pos.at(1)) > 'Z' || toupper(pos.at(1)) < 'A') || (toupper(pos.at(2)) != 'V' && toupper(pos.at(2)) != 'H'))
 					{
 						cout << "Incorrect format of the position" << endl;
@@ -117,15 +124,40 @@ int main() {
 						}
 						else if (word == "?")
 						{
-
-							/*
-							string a = puzzle.spacetofill(pos);
-							vector<string> wordhelp = words.help(a);
-							for (size_t i = 0; i < wordhelp.size(); i++)
-							{
-								cout << wordhelp[i] << endl;;
+							int a = n;
+							string solution;
+							map<string, string> aux_palex = puzzlefinal.getWordsPos();
+							map<string, vector<string>> aux_words = words.getMap();
+							for (auto it = aux_palex.begin(); it != aux_palex.end(); ++it) {
+								if (it->second == pos) {
+									n++;
+									solution = it->first;
+									break;
+								}
 							}
-							*/
+							if(n == a)
+								cout << endl << "There isn't a word starting in that position " << endl;
+							else
+							{
+								//int i = 0;
+								for (auto it = aux_words.begin(); it != aux_words.end(); ++it) {
+									//vector<string> vec_aux;
+									//vector<string> vec;
+									if (it->first == solution) {
+										//i++;
+										vector<string> vec = it->second;
+										/*for (int m = 0; m < vec.size(); m++) {
+												vec_aux.push_back(vec[m]);
+										}*/
+										//if (i == 1) {
+											int ran = vec.size() - 1; //size of auxiliary vector with synonims inside
+											int value = rand() % ran;     // value in the range 1 to ran
+											cout << "\nHint: "<< vec[value] << endl << endl;
+											break;
+										//}
+									}
+								}
+							}
 						}
 						else
 						{
@@ -140,12 +172,11 @@ int main() {
 						}
 					}
 					puzzle.printboard();
-					cout << "Position (LCD / CTRL + Z = stop ) ?" << endl;
-					cin >> pos;
-				}
+				} while ((puzzle.getBoard().getVector() != puzzlefinal.getBoard().getVector()) && (!cin.eof()));
+				string save = player + " completed the puzzle " + puzzlename + " in " + to_string(time.clock()) + " seconds." + " With " + to_string(n) + " hints";
 				if (puzzle.getBoard().getVector() == puzzlefinal.getBoard().getVector()) {
-					puzzle.saveinfile(save_file_name,time.clock());
-					cout << "Congratulations!! You finished the board in: " << time.clock() << "seconds!!";
+					puzzle.saveinfile(save_file_name, save);
+					cout << "Congratulations!! You finished the board in: " << time.clock() << " seconds!!";
 				}
 
 			}

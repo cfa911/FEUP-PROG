@@ -1,19 +1,2 @@
-words.txt
 
- A B A C K # . . . .
- # A L I E N # . . .
- # A L E R T # . . .
- . . # . . . . . . .
- . . . . . . . . . .
- . . . . . . . . . .
- . . . . . . . . . .
- . . . . . . . . . .
- . . . . . . . . . .
- . . . . . . . . . .
-
-aAH ABACK
-bCH ALERT
-bBH ALIEN
-cAV ALL
-
-177
+Christopher Abrue completed the puzzle b000.txt in 128seconds. With 7 hints
